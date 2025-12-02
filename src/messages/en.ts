@@ -9,13 +9,13 @@ import tableColumn from './en/tableColumn';
 import validation from './en/validation';
 
 export default {
-  ...common,
+  common: {...common},
   ...dataView,
-  ...label,
+  label: {...label},
   ...message,
-  ...modal,
+  modal: {...modal},
   ...permission,
   ...status,
-  ...tableColumn,
+  tableColumn: {...tableColumn},
   ...validation,
 } as const;

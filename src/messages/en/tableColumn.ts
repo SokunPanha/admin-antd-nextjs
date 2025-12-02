@@ -40,4 +40,5 @@ export default {
   tax: 'Tax',
   shipping: 'Shipping',
   payment: 'Payment',
+  created_at: "Created At"
 } as const;

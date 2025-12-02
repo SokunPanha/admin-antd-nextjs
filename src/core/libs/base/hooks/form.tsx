@@ -1,9 +1,9 @@
+"use client"
 import { Form, notification } from "antd";
-import { useRef, useState, useEffect, type DependencyList } from "react";
+import React, { useRef, useState, useEffect, type DependencyList } from "react";
 import type { ProFormInstance } from "@ant-design/pro-form";
 import { type ActionType } from "@ant-design/pro-components";
-import { useTranslation } from "react-i18next";
-import { t } from "i18next";
+import { useTranslations } from "next-intl";
 
 export const useProForm = () => {
   const formRef = useRef<ProFormInstance>(undefined);
@@ -45,7 +45,7 @@ export const useForm = () => {
 };
 
 export const useModalForm = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
   const [form] = Form.useForm();
   const [visible, setVisible] = useState(false);
   const ref = useRef({ row: undefined });
@@ -78,7 +78,7 @@ export const useModalForm = () => {
     props: {
       submitter: {
         searchConfig: {
-          submitText: t("label:label.confirm"),
+          submitText: t("confirm"),
         },
       },
       visible,
@@ -180,10 +180,11 @@ export const useDrawerForm = () => {
 };
 
 export const useProTable = () => {
+  const t = useTranslations();
   const actionRef = useRef<ActionType | undefined>(undefined);
   const formRef = useRef<ProFormInstance>(undefined);
   const [searchCollapsed, setSearchCollapsed] = useState(false);
-  const searchRef = useRef<HTMLDivElement>();
+  const searchRef = useRef<HTMLDivElement>(null);
   const [searchHeight, setSearchHeight] = useState(0);
   useEffect(() => {
     if (searchRef.current) {
@@ -231,7 +232,7 @@ export const useProTable = () => {
             }}
             className="dark:text-blue-400 text-blue-700"
           >
-            {collapsed ? t('label:label.show_more') : t('label:label.collapse')}
+            {collapsed ? t('more') : t('collapse')}
           </a>
         ),
         span: 6,
@@ -242,10 +243,11 @@ export const useProTable = () => {
 
 
 export const useProTableForWithDrawPage = () => {
+  const t = useTranslations();
   const actionRef = useRef<ActionType | undefined>(undefined);
   const formRef = useRef<ProFormInstance>(undefined);
   const [searchCollapsed, setSearchCollapsed] = useState(false);
-  const searchRef = useRef<HTMLDivElement>();
+  const searchRef = useRef<HTMLDivElement>(null);
   const [searchHeight, setSearchHeight] = useState(0);
   useEffect(() => {
     if (searchRef.current) {
@@ -279,21 +281,21 @@ export const useProTableForWithDrawPage = () => {
       },
       size: "small" as const,
       // bordered: true,
-      searchFormRender: (props, defaultDom) => (
+      searchFormRender: (props: unknown, defaultDom: React.ReactNode) => (
         <div ref={searchRef}>{defaultDom}</div>
       ),
       bordered: true,
       search: {
         labelWidth: "auto" as const,
         collapsed: searchCollapsed,
-        collapseRender: (collapsed, onCollapse) => (
+        collapseRender: (collapsed: boolean, onCollapse: unknown) => (
           <a
             onClick={() => {
               setSearchCollapsed(!collapsed);
             }}
             className="dark:text-blue-400 text-blue-700"
           >
-            {collapsed ? t('label:label.show_more') : t('label:label.collapse')}
+            {collapsed ? t('more') : t('collapse')}
           </a>
         ),
         span: 6,
@@ -347,7 +349,7 @@ export const useModal = () => {
 export function usePasteValueOnFocus() {
   return {
     fieldProps: {
-      onFocus: async (e) => {
+      onFocus: async (e: any) => {
         try {
           const text = await navigator.clipboard.readText();
           e.target.value = text;
@@ -363,11 +365,9 @@ export const PasteValueOnFocus = usePasteValueOnFocus();
 
 
 
-export const operationSuccessMessage = () => {
+export const operationSuccessMessage = (t: (key: string) => string) => {
   notification.destroy()
   notification.success({
-    message: t("message:message.messageSuccess", {
-      action: t("message:message.operation"),
-    }),
+    message: t("operationSuccess"),
   });
 }

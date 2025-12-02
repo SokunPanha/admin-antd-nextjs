@@ -1,3 +1,4 @@
+"use client"
 import { createElement, type FC, type ReactNode } from "react";
 
 export const createPage = (...children: any[]) => {

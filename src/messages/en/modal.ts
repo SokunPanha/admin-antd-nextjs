@@ -43,4 +43,5 @@ export default {
   feedback: 'Feedback',
   reportIssue: 'Report Issue',
   shareThis: 'Share This',
+  create_form: "Create Form"
 } as const;

@@ -1,12 +1,7 @@
 import type { ProSchemaValueEnumObj } from "@ant-design/pro-components";
 import type { RangePickerProps } from "antd/es/date-picker";
 import { useCallback, useState } from "react";
-import { useTranslation } from "react-i18next";
-import cloneDeep from "lodash.clonedeep";
-import {
-  type PresetSystemColorObjectsType,
-} from "@/components/theme-color";
-import dayjs from "dayjs";
+import cloneDeep from "lodash";
 import { message } from "antd";
 import { operationSuccessMessage } from "../hooks";
 export const deepClone = cloneDeep;
@@ -52,9 +47,12 @@ export default function useToggle(defaultValue: boolean = false) {
 
 export const translateMappingObject = (
   params: ProSchemaValueEnumObj,
-  name?: any
+  name?: any,
+  t?: (key: string) => string
 ): Record<string, any> => {
-  const [t] = useTranslation();
+  if (!t) {
+    return params as Record<string, any>;
+  }
 
   for (let key in params) {
     if (name) {
@@ -93,37 +91,24 @@ export function translateMapToSelectOption(
   return array?.map((item) => ({ label: t(item.label), value: item.value }));
 }
 
-export function useSystemTheme() {
-  const stored = localStorage.getItem("systemPrimaryColor");
-  //@ts-ignore
-  const theme: PresetSystemColorObjectsType = stored
-    ? (JSON.parse(stored) as PresetSystemColorObjectsType)
-    : {
-        tailwindColor: "!bg-gray-900",
-        hexCodeColor: "#111827",
-        colorPrimaryBg: "rgba(17, 24, 39, 0.3)",
-      };
-
-  return { theme };
-}
 
 export function FormatRemoveTimeFromDate(date: string) {
   return date.split(" ")[0];
 }
 
-export const onCopy = async (text: string, t: any) => {
+export const onCopy = async (text: string, t: (key: string) => string) => {
   try {
     await navigator.clipboard.writeText(text);
     message.destroy();
-    message.success(t("tableColumn:tableColumn.copied"));
+    message.success(t("copySuccess"));
   } catch (err) {
     message.destroy();
-    message.error(t("tableColumn:tableColumn.copy_fail"));
+    message.error(t("copyFailed"));
   }
 };
 
 export function EnableCellCopy(key, t) {
-  return (record) => ({
+  return (record: any) => ({
     onClick: () => onCopy(record[key], t),
     style: { cursor: "pointer" },
   });
@@ -167,13 +152,16 @@ export function useFetch<RequestType, SummaryResponseType>(FetchFunction: (param
 
 export function useMutationHandler<RequestType>(
   apiFunction: (params: RequestType) => Promise<any>,
-  callback?: () => void
+  callback?: () => void,
+  t?: (key: string) => string
 ) {
   return async (params: RequestType): Promise<void> => {
     try {
     if(params && Object.keys(params).length > 0){
         await apiFunction(filterRequestParam(params));
-      operationSuccessMessage();
+      if (t) {
+        operationSuccessMessage(t);
+      }
       callback?.();
     }
     } catch (error) {

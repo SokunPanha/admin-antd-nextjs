@@ -55,4 +55,5 @@ export default {
   dragDropFile: 'Drag and drop file here',
   captcha: 'Verification Code',
   getCaptcha: 'Get Code',
+  addNew: "Add New"
 } as const;
