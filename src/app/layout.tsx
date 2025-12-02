@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { ConfigProvider } from "antd";
 import themeConfig from "@/theme/themeConfig";
 import "@/utils/suppress-console-warnings";
 import "./globals.css";
-
+import LocaleProvider from "@/components/providers/LocaleProvider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -32,9 +31,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AntdRegistry>
-          <ConfigProvider theme={themeConfig}>
+          <LocaleProvider themeConfig={themeConfig}>
             {children}
-          </ConfigProvider>
+          </LocaleProvider>
         </AntdRegistry>
       </body>
     </html>

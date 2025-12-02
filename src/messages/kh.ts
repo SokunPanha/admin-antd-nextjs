@@ -9,13 +9,13 @@ import tableColumn from './kh/tableColumn';
 import validation from './kh/validation';
 
 export default {
-  ...common,
-  ...dataView,
-  ...label,
-  ...message,
-  ...modal,
-  ...permission,
-  ...status,
-  ...tableColumn,
-  ...validation,
+  common: {...common},
+  dataView: {...dataView},
+  label: {...label},
+  message: {...message},
+  modal: {...modal},
+  permission: {...permission},
+  status: {...status},
+  tableColumn: {...tableColumn},
+  validation: {...validation},
 } as const;

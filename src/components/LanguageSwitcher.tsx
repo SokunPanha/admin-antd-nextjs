@@ -1,43 +1,68 @@
-'use client';
+"use client";
 
-import { useLocale } from 'next-intl';
-import { useRouter, usePathname } from '@/i18n/routing';
-import { Dropdown } from 'antd';
-import { GlobalOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
+import { Dropdown } from "antd";
+import type { MenuProps } from "antd";
+import { useLocale } from "@/contexts/LocaleContext";
 
-const languages = {
-  en: 'English',
-  zh: '简体中文',
-} as const;
+interface LanguageSwitcherProps {
+  onChange?: (locale: string) => void;
+}
 
-export function LanguageSwitcher() {
-  const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
+const languages = [
+  {
+    key: "en",
+    label: "English",
+    flag: "🇺🇸",
+  },
+  {
+    key: "kh",
+    label: "ភាសាខ្មែរ",
+    flag: "🇰🇭",
+  },
+];
 
-  const handleChange = (newLocale: string) => {
-    router.replace(pathname, { locale: newLocale as any });
+export default function LanguageSwitcher({ onChange }: LanguageSwitcherProps) {
+  const { locale: currentLocale, setLocale } = useLocale();
+
+  const handleLanguageChange = (locale: string) => {
+    setLocale(locale);
+    onChange?.(locale);
   };
 
-  const items: MenuProps['items'] = [
-    {
-      key: 'en',
-      label: 'English',
-      onClick: () => handleChange('en'),
-    },
-    {
-      key: 'zh',
-      label: '简体中文',
-      onClick: () => handleChange('zh'),
-    },
-  ];
+  const menuItems: MenuProps["items"] = languages.map((lang) => ({
+    key: lang.key,
+    label: (
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <span style={{ fontSize: 18 }}>{lang.flag}</span>
+        <span>{lang.label}</span>
+      </div>
+    ),
+    onClick: () => handleLanguageChange(lang.key),
+  }));
+
+  const currentLanguage = languages.find((lang) => lang.key === currentLocale);
 
   return (
-    <Dropdown menu={{ items, selectedKeys: [locale] }} placement="bottomRight">
-      <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8 }}>
-        <GlobalOutlined style={{ fontSize: 16 }} />
-        <span>{languages[locale as keyof typeof languages]}</span>
+    <Dropdown menu={{ items: menuItems }} placement="bottomRight">
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 6,
+          cursor: "pointer",
+          padding: "4px 8px",
+          borderRadius: 4,
+          transition: "background 0.2s",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = "rgba(0, 0, 0, 0.04)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = "transparent";
+        }}
+      >
+        <span style={{ fontSize: 18 }}>{currentLanguage?.flag}</span>
+        <span style={{ fontSize: 14 }}>{currentLanguage?.label}</span>
       </div>
     </Dropdown>
   );

@@ -6,6 +6,7 @@ import { Dropdown, Input, Space, Button } from "antd";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { menuRoutes, getUserMenuItems } from "./constants";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function PageLayout({
   children,
@@ -60,6 +61,7 @@ export default function PageLayout({
               />
               <Button type="primary" icon={<SearchOutlined />} />
             </Space.Compact>,
+            <LanguageSwitcher key="language" />,
             <QuestionCircleOutlined
               key="QuestionCircleOutlined"
               style={{ fontSize: 16 }}

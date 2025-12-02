@@ -10,12 +10,12 @@ import validation from './en/validation';
 
 export default {
   common: {...common},
-  ...dataView,
+  dataView: {...dataView},
   label: {...label},
-  ...message,
+  message: {...message},
   modal: {...modal},
-  ...permission,
-  ...status,
+  permission: {...permission},
+  status: {...status},
   tableColumn: {...tableColumn},
-  ...validation,
+  validation: {...validation},
 } as const;
