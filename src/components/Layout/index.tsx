@@ -2,9 +2,9 @@
 
 import { QuestionCircleOutlined, BellOutlined, SearchOutlined } from "@ant-design/icons";
 import { ProLayout } from "@ant-design/pro-components";
-import { Dropdown, Input, Space, Button } from "antd";
+import { Dropdown, Input, Space, Button, message } from "antd";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { getUserMenuItems } from "./constants";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { menuRoutes } from "./constants/menuRoutes";
@@ -15,6 +15,26 @@ export default function PageLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        message.success('Logout successful!');
+        router.push('/login');
+      } else {
+        message.error(data.message || 'Logout failed!');
+      }
+    } catch (error) {
+      message.error('An error occurred during logout');
+    }
+  };
   return (
     <main
       style={{
@@ -44,7 +64,7 @@ export default function PageLayout({
             return (
               <Dropdown
                 menu={{
-                  items: getUserMenuItems(()=>{}),
+                  items: getUserMenuItems(handleLogout),
                 }}
               >
                 {dom}

@@ -25,11 +25,29 @@ export default function LoginPage() {
     const router = useRouter();
 
     const handleSubmit = async (values: any) => {
-        console.log('Login values:', values);
-        message.success('Login successful!');
-        // Simulate delay
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        router.push('/admin');
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: values.username,
+                    password: values.password,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                message.success('Login successful!');
+                router.push('/admin');
+            } else {
+                message.error(data.message || 'Login failed!');
+            }
+        } catch (error) {
+            message.error('An error occurred during login');
+        }
     };
 
     return (
@@ -75,7 +93,7 @@ export default function LoginPage() {
                                 size: 'large',
                                 prefix: <UserOutlined className={'prefixIcon'} />,
                             }}
-                            placeholder={'Username: admin'}
+                            placeholder={'Email: admin@gmail.com'}
                             rules={[
                                 {
                                     required: true,
@@ -89,7 +107,7 @@ export default function LoginPage() {
                                 size: 'large',
                                 prefix: <LockOutlined className={'prefixIcon'} />,
                             }}
-                            placeholder={'Password: ant.design'}
+                            placeholder={'Password: admin'}
                             rules={[
                                 {
                                     required: true,
