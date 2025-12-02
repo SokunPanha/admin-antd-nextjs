@@ -30,7 +30,6 @@ export default function AdminDashboard() {
                     </div>
                 </ProCard>
             </ProCard>
-            {t('welcome')}
         </PageContainer>
     );
 }

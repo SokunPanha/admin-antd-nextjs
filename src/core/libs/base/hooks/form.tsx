@@ -78,7 +78,7 @@ export const useModalForm = () => {
     props: {
       submitter: {
         searchConfig: {
-          submitText: t("confirm"),
+          submitText: t("label.confirm"),
         },
       },
       visible,
@@ -204,7 +204,7 @@ export const useProTable = () => {
     reload,
 
     props: {
-      rowClassName: (_, index) => (index % 2 === 0 ? "even-row" : "odd-row"),
+      rowClassName: (_: any, index: number) => (index % 2 === 0 ? "even-row" : "odd-row"),
       actionRef,
       formRef,
       scroll: { x: "max-content", y: `calc(100vh - ${searchHeight}px - 340px )` },
@@ -218,14 +218,14 @@ export const useProTable = () => {
       },
       size: "small" as const,
       // bordered: true,
-      searchFormRender: (props, defaultDom) => (
+      searchFormRender: (props: any, defaultDom: any) => (
         <div ref={searchRef}>{defaultDom}</div>
       ),
       bordered: true,
       search: {
         labelWidth: "auto" as const,
         collapsed: searchCollapsed,
-        collapseRender: (collapsed, onCollapse) => (
+        collapseRender: (collapsed: boolean, onCollapse: any) => (
           <a
             onClick={() => {
               setSearchCollapsed(!collapsed);
@@ -267,7 +267,7 @@ export const useProTableForWithDrawPage = () => {
     reload,
 
     props: {
-      rowClassName: (_, index) => (index % 2 === 0 ? "even-row" : "odd-row"),
+      rowClassName: (_: any, index: number) => (index % 2 === 0 ? "even-row" : "odd-row"),
       actionRef,
       formRef,
       scroll: { x: "max-content", y: `calc(100vh - ${searchHeight}px - 340px )` },

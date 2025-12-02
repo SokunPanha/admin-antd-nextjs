@@ -107,7 +107,7 @@ export const onCopy = async (text: string, t: (key: string) => string) => {
   }
 };
 
-export function EnableCellCopy(key, t) {
+export function EnableCellCopy(key: string, t: any) {
   return (record: any) => ({
     onClick: () => onCopy(record[key], t),
     style: { cursor: "pointer" },
