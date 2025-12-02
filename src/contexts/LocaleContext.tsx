@@ -1,16 +1,18 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
 
 interface LocaleContextType {
   locale: string;
   setLocale: (locale: string) => void;
+  localeVersion: number;
 }
 
 const LocaleContext = createContext<LocaleContextType | undefined>(undefined);
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState("en");
+  const [localeVersion, setLocaleVersion] = useState(0);
 
   useEffect(() => {
     // Get locale from localStorage on mount
@@ -18,13 +20,15 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     setLocaleState(savedLocale);
   }, []);
 
-  const setLocale = (newLocale: string) => {
+  const setLocale = useCallback((newLocale: string) => {
     setLocaleState(newLocale);
     localStorage.setItem("locale", newLocale);
-  };
+    // Increment version to trigger re-renders in components that depend on it
+    setLocaleVersion((v) => v + 1);
+  }, []);
 
   return (
-    <LocaleContext.Provider value={{ locale, setLocale }}>
+    <LocaleContext.Provider value={{ locale, setLocale, localeVersion }}>
       {children}
     </LocaleContext.Provider>
   );

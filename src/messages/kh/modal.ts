@@ -43,4 +43,5 @@ export default {
   feedback: 'មតិកែលម្អ',
   reportIssue: 'រាយការណ៍បញ្ហា',
   shareThis: 'ចែករំលែកនេះ',
+  create_form: 'បង្កើតទម្រង់',
 } as const;

@@ -55,4 +55,7 @@ export default {
   dragDropFile: 'អូសនិងដាក់ឯកសារនៅទីនេះ',
   captcha: 'លេខកូដផ្ទៀងផ្ទាត់',
   getCaptcha: 'យកកូដ',
+  addNew: 'បន្ថែមថ្មី',
+  confirm: 'បញ្ជាក់',
+  image: 'រូបភាព',
 } as const;

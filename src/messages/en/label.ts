@@ -56,5 +56,6 @@ export default {
   captcha: 'Verification Code',
   getCaptcha: 'Get Code',
   addNew: "Add New",
-  confirm: "Confirm"
+  confirm: "Confirm",
+  image: 'Image',
 } as const;

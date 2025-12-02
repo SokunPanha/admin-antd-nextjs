@@ -28,7 +28,6 @@ export default function AdminLayout({
     }
 
     return( <PageLayout>
-
        <NextIntlClientProvider locale={locale} messages={messages}>
         {children}
        </NextIntlClientProvider>

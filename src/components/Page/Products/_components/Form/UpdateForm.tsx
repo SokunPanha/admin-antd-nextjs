@@ -3,11 +3,11 @@ import React from 'react'
 import { useProductsPageContext } from '../../helper/hooks'
 import { useTranslations } from 'next-intl'
 
-export default function CreateForm() {
-    const {createForm} = useProductsPageContext()
+export default function UpdateForm() {
+    const {updateForm} = useProductsPageContext()
     const t = useTranslations()
   return (
-    <ModalForm {...createForm.props} title={t('modal.addProduct')} >
+    <ModalForm {...updateForm.props} title={t('modal.editProduct')} >
       <ProFormText
         name="name"
         label={t('label.name')}
