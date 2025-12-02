@@ -7,26 +7,26 @@ import { useTranslations } from 'next-intl';
 export default function AdminDashboard() {
     const t = useTranslations()
     return (
-        <PageContainer title="Dashboard">
+        <PageContainer title={t('dashboard.title')}>
             <ProCard direction="column" ghost gutter={[0, 16]}>
                 <ProCard gutter={16} ghost>
                     <ProCard colSpan={6} layout="center" bordered>
-                        <Statistic title="Active Users" value={112893} precision={0} />
+                        <Statistic title={t('dashboard.activeUsers')} value={112893} precision={0} />
                     </ProCard>
                     <ProCard colSpan={6} layout="center" bordered>
-                        <Statistic title="Daily Visits" value={8846} precision={0} />
+                        <Statistic title={t('dashboard.dailyVisits')} value={8846} precision={0} />
                     </ProCard>
                     <ProCard colSpan={6} layout="center" bordered>
-                        <Statistic title="Total Revenue" value={93423} precision={2} prefix="$" />
+                        <Statistic title={t('dashboard.totalRevenue')} value={93423} precision={2} prefix="$" />
                     </ProCard>
                     <ProCard colSpan={6} layout="center" bordered>
-                        <Statistic title="New Orders" value={1234} precision={0} />
+                        <Statistic title={t('dashboard.newOrders')} value={1234} precision={0} />
                     </ProCard>
                 </ProCard>
 
-                <ProCard title="Traffic Analysis" bordered headerBordered>
+                <ProCard title={t('dashboard.trafficAnalysis')} bordered headerBordered>
                     <div style={{ height: 360, display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#999' }}>
-                        Chart Placeholder (Integrate with @ant-design/charts or similar)
+                        {/* {t('dashboard.chartPlaceholder')} */}
                     </div>
                 </ProCard>
             </ProCard>

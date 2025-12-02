@@ -41,4 +41,7 @@ export default {
   acceptTerms: 'Please accept the terms and conditions',
   captchaRequired: 'Please enter the verification code',
   invalidCaptcha: 'Invalid verification code',
+  enterProductName: 'Please enter product name',
+  enterProductPrice: 'Please enter product price',
+  enterProductImage: 'Please enter product image URL',
 } as const;

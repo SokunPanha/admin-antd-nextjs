@@ -58,4 +58,7 @@ export default {
   addNew: 'បន្ថែមថ្មី',
   confirm: 'បញ្ជាក់',
   image: 'រូបភាព',
+  enterProductName: 'បញ្ចូលឈ្មោះផលិតផល',
+  enterProductPrice: 'បញ្ចូលតម្លៃផលិតផល',
+  searchPlaceholder: 'ស្វែងរក...',
 } as const;

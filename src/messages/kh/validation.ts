@@ -41,4 +41,7 @@ export default {
   acceptTerms: 'សូមទទួលយកលក្ខខណ្ឌ',
   captchaRequired: 'សូមបញ្ចូលលេខកូដផ្ទៀងផ្ទាត់',
   invalidCaptcha: 'លេខកូដផ្ទៀងផ្ទាត់មិនត្រឹមត្រូវ',
+  enterProductName: 'សូមបញ្ចូលឈ្មោះផលិតផល',
+  enterProductPrice: 'សូមបញ្ចូលតម្លៃផលិតផល',
+  enterProductImage: 'សូមបញ្ចូល URL រូបភាពផលិតផល',
 } as const;

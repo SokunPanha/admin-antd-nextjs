@@ -58,4 +58,7 @@ export default {
   addNew: "Add New",
   confirm: "Confirm",
   image: 'Image',
+  enterProductName: 'Enter product name',
+  enterProductPrice: 'Enter product price',
+  searchPlaceholder: 'Search...',
 } as const;

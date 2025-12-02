@@ -7,6 +7,8 @@ import permission from './kh/permission';
 import status from './kh/status';
 import tableColumn from './kh/tableColumn';
 import validation from './kh/validation';
+import menu from './kh/menu';
+import dashboard from './kh/dashboard';
 
 export default {
   common: {...common},
@@ -18,4 +20,6 @@ export default {
   status: {...status},
   tableColumn: {...tableColumn},
   validation: {...validation},
+  menu: {...menu},
+  dashboard: {...dashboard},
 } as const;
