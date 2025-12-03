@@ -12,13 +12,11 @@ export default function UpdateForm() {
         name="name"
         label={t('label.name')}
         rules={[{ required: true, message: 'Please enter product name' }]}
-        placeholder="Enter product name"
       />
       <ProFormDigit
         name="price"
         label={t('label.price')}
         rules={[{ required: true, message: 'Please enter product price' }]}
-        placeholder="Enter product price"
         min={0}
         fieldProps={{
           precision: 2,

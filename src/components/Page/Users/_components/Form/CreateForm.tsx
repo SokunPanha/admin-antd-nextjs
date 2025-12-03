@@ -12,7 +12,6 @@ export default function CreateForm() {
         name="name"
         label={t('label.name')}
         rules={[{ required: true, message: 'Please enter user name' }]}
-        placeholder="Enter user name"
       />
       <ProFormText
         name="avatar"
@@ -24,13 +23,11 @@ export default function CreateForm() {
         name="country"
         label={t('label.country')}
         rules={[{ required: true, message: 'Please enter country' }]}
-        placeholder="Enter country"
       />
       <ProFormText
         name="cityname"
         label={t('label.cityname')}
         rules={[{ required: true, message: 'Please enter city name' }]}
-        placeholder="Enter city name"
       />
     </ModalForm>
   )
