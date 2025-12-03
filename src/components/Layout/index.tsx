@@ -44,6 +44,9 @@ export default function PageLayout({
     >
       <ProLayout
         // title="Ant Design Admin"
+        headerTitleRender={()=> {
+          return (<div className="text-dark  text-xl font-bold">Admin Management</div>)
+        }}
         layout="mix"
         splitMenus={false}
         contentWidth="Fluid"
