@@ -1,4 +1,4 @@
-import { DingtalkSquareFilled, ProductFilled, GroupOutlined } from "@ant-design/icons";
+import { DingtalkSquareFilled, ProductFilled, GroupOutlined, UserOutlined } from "@ant-design/icons";
 
 export const getMenuRoutes = (t: (key: string) => string) => ({
     path: '/admin',
@@ -14,10 +14,15 @@ export const getMenuRoutes = (t: (key: string) => string) => ({
             icon: <ProductFilled/>,
         },
         {
-            path: '/admin/categories',
-            name: t('menu.categories'),
-            icon: <GroupOutlined/>,
+            path: '/admin/users',
+            name: t('menu.users'),
+            icon: <UserOutlined/>,
         },
+        // {
+        //     path: '/admin/categories',
+        //     name: t('menu.categories'),
+        //     icon: <GroupOutlined/>,
+        // },
     ],
 });
 
@@ -34,6 +39,11 @@ export const menuRoutes = {
             path: '/admin/products',
             name: 'Products',
             icon: <ProductFilled/>,
+        },
+        {
+            path: '/admin/users',
+            name: 'Users',
+            icon: <UserOutlined/>,
         },
         {
             path: '/admin/categories',

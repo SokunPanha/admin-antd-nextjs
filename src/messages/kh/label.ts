@@ -58,6 +58,8 @@ export default {
   addNew: 'បន្ថែមថ្មី',
   confirm: 'បញ្ជាក់',
   image: 'រូបភាព',
+  avatar: 'រូបភាព',
+  cityname: 'ឈ្មោះទីក្រុង',
   enterProductName: 'បញ្ចូលឈ្មោះផលិតផល',
   enterProductPrice: 'បញ្ចូលតម្លៃផលិតផល',
   searchPlaceholder: 'ស្វែងរក...',

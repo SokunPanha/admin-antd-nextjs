@@ -58,6 +58,8 @@ export default {
   addNew: "Add New",
   confirm: "Confirm",
   image: 'Image',
+  avatar: 'Avatar',
+  cityname: 'City Name',
   enterProductName: 'Enter product name',
   enterProductPrice: 'Enter product price',
   searchPlaceholder: 'Search...',

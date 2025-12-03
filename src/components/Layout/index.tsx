@@ -94,7 +94,7 @@ export default function PageLayout({
           ...menuRoutes,
         }}
       >
-         {children}
+          {children}
       </ProLayout>
     </main>
   );
