@@ -1,6 +1,6 @@
 import {Tooltip, Typography} from 'antd'
 
-export const CopyableCutPopover = ({content, width}: {width: number, content: string}): JSX.Element => {
+export const CopyableCutPopover = ({content, width}: {width: number, content: string}) => {
   return (
     <Tooltip title={content}>
       <Typography.Text

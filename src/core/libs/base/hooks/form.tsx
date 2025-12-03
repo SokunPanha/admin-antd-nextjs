@@ -361,7 +361,6 @@ export function usePasteValueOnFocus() {
   };
 }
 
-export const PasteValueOnFocus = usePasteValueOnFocus();
 
 
 
@@ -369,5 +368,6 @@ export const operationSuccessMessage = (t: (key: string) => string) => {
   notification.destroy()
   notification.success({
     message: t("operationSuccess"),
+    title: undefined
   });
 }

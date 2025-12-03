@@ -5,6 +5,7 @@ import themeConfig from "@/theme/themeConfig";
 import "@/utils/suppress-console-warnings";
 import "./globals.css";
 import LocaleProvider from "@/components/providers/LocaleProvider";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,9 +32,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AntdRegistry>
-          <LocaleProvider themeConfig={themeConfig}>
-            {children}
-          </LocaleProvider>
+          <ThemeProvider>
+            <LocaleProvider themeConfig={themeConfig}>
+              {children}
+            </LocaleProvider>
+          </ThemeProvider>
         </AntdRegistry>
       </body>
     </html>

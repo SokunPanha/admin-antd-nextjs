@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { getUserMenuItems } from "./constants";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { menuRoutes } from "./constants/menuRoutes";
 
 export default function PageLayout({
@@ -82,6 +83,7 @@ export default function PageLayout({
               />
               <Button type="primary" icon={<SearchOutlined />} />
             </Space.Compact>,
+            <ThemeSwitcher key="theme" />,
             <LanguageSwitcher key="language" />,
             <QuestionCircleOutlined
               key="QuestionCircleOutlined"

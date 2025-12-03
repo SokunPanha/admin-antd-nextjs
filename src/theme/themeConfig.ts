@@ -1,3 +1,4 @@
+import { theme } from 'antd';
 import type { ThemeConfig } from 'antd';
 
 /**
@@ -7,8 +8,8 @@ import type { ThemeConfig } from 'antd';
 const themeConfig: ThemeConfig = {
     token: {
         // Primary color
-        colorPrimary: '#1890ff',
-
+        colorPrimary:  '#1890ff',
+        
         // Border radius
         borderRadius: 8,
 

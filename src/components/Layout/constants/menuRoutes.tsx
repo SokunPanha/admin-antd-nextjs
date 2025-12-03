@@ -45,10 +45,10 @@ export const menuRoutes = {
             name: 'Users',
             icon: <UserOutlined/>,
         },
-        {
-            path: '/admin/categories',
-            name: 'Categories',
-            icon: <GroupOutlined/>,
-        },
+        // {
+        //     path: '/admin/categories',
+        //     name: 'Categories',
+        //     icon: <GroupOutlined/>,
+        // },
     ],
 };

@@ -70,6 +70,7 @@ export const createApi =
       notification.destroy();
       notification.error({
         message: json.message,
+        title: undefined
       });
 
       throw new Error(json.message);
@@ -103,6 +104,7 @@ export const sync = async (fn: () => Promise<any>, { loading = true } = {}) => {
     notification.error({
       message: "提示",
       description: msg,
+      title: undefined
     });
   }
 };
@@ -120,6 +122,7 @@ export const syncWithErrorHandleFunc = async (fn: () => Promise<never>, errFunc:
     notification.error({
       message: "提示",
       description: msg,
+      title: undefined
     });
   }
 };

@@ -12,13 +12,361 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Dark mode styles */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
+.dark body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* ProLayout dark mode support */
+.dark .ant-layout {
+  background: #141414;
+}
+
+.dark .ant-layout-header {
+  background: #1f1f1f;
+}
+
+.dark .ant-layout-sider {
+  background: #141414;
+}
+
+.dark .ant-menu {
+  background: #141414;
+  color: #fff;
+}
+
+.dark .ant-menu-item,
+.dark .ant-menu-submenu-title {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-menu-item:hover,
+.dark .ant-menu-submenu-title:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dark .ant-menu-item-selected {
+  background: #1890ff;
+  color: #fff;
+}
+
+.dark .ant-pro-card {
+  background: #1f1f1f;
+  border-color: #303030;
+}
+
+.dark .ant-table {
+  background: #1f1f1f;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-table-thead > tr > th {
+  background: #262626;
+  border-color: #303030;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-table-tbody > tr > td {
+  border-color: #303030;
+}
+
+.dark .ant-table-tbody > tr:hover > td {
+  background: #262626;
+}
+
+.dark .even-row {
+  background: #1a1a1a;
+}
+
+.dark .odd-row {
+  background: #1f1f1f;
+}
+
+.dark .ant-input,
+.dark .ant-select-selector,
+.dark .ant-picker {
+  background: #262626;
+  border-color: #434343;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-btn-default {
+  background: #262626;
+  border-color: #434343;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-btn-default:hover {
+  background: #303030;
+  border-color: #595959;
+  color: #fff;
+}
+
+/* Modal dark mode */
+.dark .ant-modal-content {
+  background: #1f1f1f;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-modal-header {
+  background: #1f1f1f;
+  border-color: #303030;
+}
+
+.dark .ant-modal-title {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-modal-close {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.dark .ant-modal-close:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-modal-footer {
+  border-color: #303030;
+}
+
+/* Form dark mode */
+.dark .ant-form-item-label > label {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-input:hover,
+.dark .ant-select-selector:hover {
+  border-color: #595959;
+}
+
+.dark .ant-input:focus,
+.dark .ant-select-selector:focus,
+.dark .ant-input-focused {
+  border-color: #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.dark .ant-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Dropdown dark mode */
+.dark .ant-dropdown {
+  background: #1f1f1f;
+}
+
+.dark .ant-dropdown-menu {
+  background: #1f1f1f;
+  border-color: #303030;
+}
+
+.dark .ant-dropdown-menu-item {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-dropdown-menu-item:hover {
+  background: #262626;
+}
+
+/* Pagination dark mode */
+.dark .ant-pagination-item {
+  background: #262626;
+  border-color: #434343;
+}
+
+.dark .ant-pagination-item a {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-pagination-item:hover {
+  border-color: #1890ff;
+}
+
+.dark .ant-pagination-item:hover a {
+  color: #1890ff;
+}
+
+.dark .ant-pagination-item-active {
+  background: #1890ff;
+  border-color: #1890ff;
+}
+
+.dark .ant-pagination-item-active a {
+  color: #fff;
+}
+
+.dark .ant-pagination-prev button,
+.dark .ant-pagination-next button {
+  color: rgba(255, 255, 255, 0.85);
+  background: #262626;
+  border-color: #434343;
+}
+
+.dark .ant-pagination-prev:hover button,
+.dark .ant-pagination-next:hover button {
+  color: #1890ff;
+  border-color: #1890ff;
+}
+
+/* Select dropdown dark mode */
+.dark .ant-select-dropdown {
+  background: #1f1f1f;
+}
+
+.dark .ant-select-item {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-select-item-option:hover {
+  background: #262626;
+}
+
+.dark .ant-select-item-option-selected {
+  background: #1890ff;
+  color: #fff;
+}
+
+/* Tabs dark mode */
+.dark .ant-tabs {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-tabs-tab {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.dark .ant-tabs-tab:hover {
+  color: #1890ff;
+}
+
+.dark .ant-tabs-tab-active {
+  color: #1890ff;
+}
+
+.dark .ant-tabs-ink-bar {
+  background: #1890ff;
+}
+
+/* Checkbox dark mode */
+.dark .ant-checkbox-wrapper {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-checkbox-inner {
+  background: #262626;
+  border-color: #434343;
+}
+
+.dark .ant-checkbox-checked .ant-checkbox-inner {
+  background: #1890ff;
+  border-color: #1890ff;
+}
+
+/* Radio dark mode */
+.dark .ant-radio-wrapper {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-radio-inner {
+  background: #262626;
+  border-color: #434343;
+}
+
+.dark .ant-radio-checked .ant-radio-inner {
+  border-color: #1890ff;
+}
+
+/* Switch dark mode */
+.dark .ant-switch {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.dark .ant-switch-checked {
+  background: #1890ff;
+}
+
+/* Message/Notification dark mode */
+.dark .ant-message-notice-content {
+  background: #1f1f1f;
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.48);
+}
+
+.dark .ant-notification-notice {
+  background: #1f1f1f;
+  color: rgba(255, 255, 255, 0.85);
+  border-color: #303030;
+}
+
+/* Divider dark mode */
+.dark .ant-divider {
+  border-color: #303030;
+}
+
+/* Card dark mode */
+.dark .ant-card {
+  background: #1f1f1f;
+  border-color: #303030;
+}
+
+.dark .ant-card-head {
+  background: #262626;
+  border-color: #303030;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Badge dark mode */
+.dark .ant-badge-count {
+  background: #ff4d4f;
+  color: #fff;
+}
+
+/* Tooltip dark mode */
+.dark .ant-tooltip-inner {
+  background: #434343;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-tooltip-arrow-content {
+  background: #434343;
+}
+
+/* Popover dark mode */
+.dark .ant-popover-inner {
+  background: #1f1f1f;
+  border-color: #303030;
+}
+
+.dark .ant-popover-inner-content {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-popover-arrow-content {
+  background: #1f1f1f;
+}
+
+/* Pro Components dark mode */
+.dark .ant-pro-table-search {
+  background: #1f1f1f;
+}
+
+.dark .ant-pro-form-group-title {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .ant-pro-field-label {
+  color: rgba(255, 255, 255, 0.85);
+}
+.dark .ant-pro-card-body {
+  background: #262626;
+}
 body {
   background: var(--background);
   color: var(--foreground);
