@@ -9,6 +9,7 @@ import tableColumn from './kh/tableColumn';
 import validation from './kh/validation';
 import menu from './kh/menu';
 import dashboard from './kh/dashboard';
+import login from './kh/login';
 
 export default {
   common: {...common},
@@ -22,4 +23,5 @@ export default {
   validation: {...validation},
   menu: {...menu},
   dashboard: {...dashboard},
+  login: {...login},
 } as const;

@@ -8,6 +8,20 @@ export function middleware(request: NextRequest) {
     // Define protected routes
     const isProtectedRoute = pathname.startsWith('/admin');
     const isLoginPage = pathname.startsWith('/login');
+    const isRootPath = pathname === '/';
+
+    // Handle root path
+    if (isRootPath) {
+        if (token) {
+            // Authenticated user -> redirect to admin
+            const adminUrl = new URL('/admin', request.url);
+            return NextResponse.redirect(adminUrl);
+        } else {
+            // Unauthenticated user -> redirect to login
+            const loginUrl = new URL('/login', request.url);
+            return NextResponse.redirect(loginUrl);
+        }
+    }
 
     // If user is trying to access protected route without token
     if (isProtectedRoute && !token) {

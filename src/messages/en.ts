@@ -9,6 +9,7 @@ import tableColumn from './en/tableColumn';
 import validation from './en/validation';
 import menu from './en/menu';
 import dashboard from './en/dashboard';
+import login from './en/login';
 
 export default {
   common: {...common},
@@ -22,4 +23,5 @@ export default {
   validation: {...validation},
   menu: {...menu},
   dashboard: {...dashboard},
+  login: {...login},
 } as const;

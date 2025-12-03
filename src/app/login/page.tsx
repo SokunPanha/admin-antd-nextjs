@@ -3,26 +3,28 @@
 import {
     AlipayCircleOutlined,
     LockOutlined,
-    MobileOutlined,
     TaobaoCircleOutlined,
     UserOutlined,
     WeiboCircleOutlined,
 } from '@ant-design/icons';
 import {
     LoginForm,
-    ProFormCaptcha,
     ProFormCheckbox,
     ProFormText,
 } from '@ant-design/pro-components';
 import { message, Tabs } from 'antd';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { NextIntlClientProvider, useTranslations } from 'next-intl';
+import { useLocale } from '@/contexts/LocaleContext';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 type LoginType = 'account' | 'mobile';
 
-export default function LoginPage() {
+function LoginContent() {
     const [loginType, setLoginType] = useState<LoginType>('account');
     const router = useRouter();
+    const t = useTranslations('login');
 
     const handleSubmit = async (values: any) => {
         try {
@@ -40,27 +42,37 @@ export default function LoginPage() {
             const data = await response.json();
 
             if (data.success) {
-                message.success('Login successful!');
+                message.success(t('loginSuccess'));
                 router.push('/admin');
             } else {
-                message.error(data.message || 'Login failed!');
+                message.error(data.message || t('loginFailed'));
             }
         } catch (error) {
-            message.error('An error occurred during login');
+            message.error(t('loginError'));
         }
     };
 
     return (
-        <div className="bg-white h-screen bg-[url('https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*y0ZTS6WLwvgAAAAAAAAAAAAADml6AQ/fmt.webp')] bg-cover bg-center">
+        <div className="bg-white h-screen bg-[url('https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*y0ZTS6WLwvgAAAAAAAAAAAAADml6AQ/fmt.webp')] bg-cover bg-center relative">
+            <div className="absolute top-4 right-4 z-10">
+                <LanguageSwitcher />
+            </div>
             <LoginForm
-                logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
-                title="Ant Design Admin"
-                subTitle="The world's most popular React UI library"
+                style={{
+                    background: 'url("./images/logo.svg")'
+                }}
+                title={t('title')}
+                // subTitle={t('subtitle')}
                 onFinish={handleSubmit}
+                submitter={{
+                    searchConfig: {
+                        submitText: t('loginButton'),
+                    },
+                }}
                 actions={
                     <div className="flex justify-center items-center flex-col">
                         <div className="block mb-6">
-                            Other login methods
+                            {t('otherLoginMethods')}
                         </div>
                         <div className="flex justify-center gap-6">
                             <AlipayCircleOutlined className="text-2xl text-[#1677ff] cursor-pointer" />
@@ -77,12 +89,12 @@ export default function LoginPage() {
                     items={[
                         {
                             key: 'account',
-                            label: 'Account Login',
+                            label: t('accountLogin'),
                         },
-                        {
-                            key: 'mobile',
-                            label: 'Phone Login',
-                        },
+                        // {
+                        //     key: 'mobile',
+                        //     label: t('phoneLogin'),
+                        // },
                     ]}
                 />
                 {loginType === 'account' && (
@@ -93,11 +105,11 @@ export default function LoginPage() {
                                 size: 'large',
                                 prefix: <UserOutlined className={'prefixIcon'} />,
                             }}
-                            placeholder={'Email: admin@gmail.com'}
+                            placeholder={t('emailPlaceholder')}
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please enter username!',
+                                    message: t('pleaseEnterUsername'),
                                 },
                             ]}
                         />
@@ -107,17 +119,17 @@ export default function LoginPage() {
                                 size: 'large',
                                 prefix: <LockOutlined className={'prefixIcon'} />,
                             }}
-                            placeholder={'Password: admin'}
+                            placeholder={t('passwordPlaceholder')}
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please enter password!',
+                                    message: t('pleaseEnterPassword'),
                                 },
                             ]}
                         />
                     </>
                 )}
-                {loginType === 'mobile' && (
+                {/* {loginType === 'mobile' && (
                     <>
                         <ProFormText
                             fieldProps={{
@@ -125,15 +137,15 @@ export default function LoginPage() {
                                 prefix: <MobileOutlined className={'prefixIcon'} />,
                             }}
                             name="mobile"
-                            placeholder={'Mobile number'}
+                            placeholder={t('mobilePlaceholder')}
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please enter mobile number!',
+                                    message: t('pleaseEnterMobile'),
                                 },
                                 {
                                     pattern: /^1\d{10}$/,
-                                    message: 'Invalid mobile number!',
+                                    message: t('invalidMobile'),
                                 },
                             ]}
                         />
@@ -145,35 +157,56 @@ export default function LoginPage() {
                             captchaProps={{
                                 size: 'large',
                             }}
-                            placeholder={'Captcha'}
+                            placeholder={t('captchaPlaceholder')}
                             captchaTextRender={(timing, count) => {
                                 if (timing) {
-                                    return `${count} ${'Get Captcha'}`;
+                                    return `${count} ${t('getCaptcha')}`;
                                 }
-                                return 'Get Captcha';
+                                return t('getCaptcha');
                             }}
                             name="captcha"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please enter Captcha!',
+                                    message: t('pleaseEnterCaptcha'),
                                 },
                             ]}
                             onGetCaptcha={async () => {
-                                message.success('Captcha sent!');
+                                message.success(t('captchaSent'));
                             }}
                         />
                     </>
-                )}
+                )} */}
                 <div className="mb-6">
                     <ProFormCheckbox noStyle name="autoLogin">
-                        Remember me
+                        {t('rememberMe')}
                     </ProFormCheckbox>
                     <a className="float-right">
-                        Forgot password
+                        {t('forgotPassword')}
                     </a>
                 </div>
             </LoginForm>
         </div>
+    );
+}
+
+export default function LoginPage() {
+    const [messages, setMessages] = useState<Record<string, string> | null>(null);
+    const { locale } = useLocale();
+
+    useEffect(() => {
+        import(`@/messages/${locale}.ts`).then((module) => {
+            setMessages(module.default);
+        });
+    }, [locale]);
+
+    if (!messages) {
+        return null;
+    }
+
+    return (
+        <NextIntlClientProvider locale={locale} messages={messages}>
+            <LoginContent />
+        </NextIntlClientProvider>
     );
 }

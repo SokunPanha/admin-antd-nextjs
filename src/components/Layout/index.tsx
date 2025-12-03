@@ -42,7 +42,7 @@ export default function PageLayout({
       }}
     >
       <ProLayout
-        title="Ant Design Admin"
+        // title="Ant Design Admin"
         layout="mix"
         splitMenus={false}
         contentWidth="Fluid"
