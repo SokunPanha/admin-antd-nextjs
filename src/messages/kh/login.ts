@@ -1,5 +1,5 @@
 export default {
-  title: 'Ant Design Admin',
+  title: 'Admin Management',
   subtitle: "បណ្ណាល័យ React UI ដ៏ពេញនិយមបំផុតនៅលើពិភពលោក",
   accountLogin: 'ចូលដោយគណនី',
   phoneLogin: 'ចូលដោយទូរស័ព្ទ',

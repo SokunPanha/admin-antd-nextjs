@@ -1,135 +1,146 @@
-'use client';
+"use client";
 
 import {
-    AlipayCircleOutlined,
-    LockOutlined,
-    TaobaoCircleOutlined,
-    UserOutlined,
-    WeiboCircleOutlined,
-} from '@ant-design/icons';
+  AlipayCircleOutlined,
+  LockOutlined,
+  TaobaoCircleOutlined,
+  UserOutlined,
+  WeiboCircleOutlined,
+} from "@ant-design/icons";
 import {
-    LoginForm,
-    ProFormCheckbox,
-    ProFormText,
-} from '@ant-design/pro-components';
-import { message, Tabs } from 'antd';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { NextIntlClientProvider, useTranslations } from 'next-intl';
-import { useLocale } from '@/contexts/LocaleContext';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
+  LoginForm,
+  ProFormCheckbox,
+  ProFormText,
+} from "@ant-design/pro-components";
+import { message, Tabs } from "antd";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { NextIntlClientProvider, useTranslations } from "next-intl";
+import { useLocale } from "@/contexts/LocaleContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { useTheme } from "@/contexts/ThemeContext";
 
-type LoginType = 'account' | 'mobile';
+type LoginType = "account" | "mobile";
 
 function LoginContent() {
-    const [loginType, setLoginType] = useState<LoginType>('account');
-    const router = useRouter();
-    const t = useTranslations('login');
+  const [loginType, setLoginType] = useState<LoginType>("account");
+  const router = useRouter();
+  const t = useTranslations("login");
+  const { theme } = useTheme();
 
-    const handleSubmit = async (values: any) => {
-        try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: values.username,
-                    password: values.password,
-                }),
-            });
+  const handleSubmit = async (values: any) => {
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values.username,
+          password: values.password,
+        }),
+      });
 
-            const data = await response.json();
+      const data = await response.json();
 
-            if (data.success) {
-                message.success(t('loginSuccess'));
-                router.push('/admin');
-            } else {
-                message.error(data.message || t('loginFailed'));
-            }
-        } catch (error) {
-            message.error(t('loginError'));
-        }
-    };
+      if (data.success) {
+        message.success(t("loginSuccess"));
+        router.push("/admin");
+      } else {
+        message.error(data.message || t("loginFailed"));
+      }
+    } catch (error) {
+      message.error(t("loginError"));
+    }
+  };
 
-    return (
-        <div className="bg-white h-screen bg-[url('https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*y0ZTS6WLwvgAAAAAAAAAAAAADml6AQ/fmt.webp')] bg-cover bg-center relative">
-            <div className="absolute top-4 right-4 z-10">
-                <LanguageSwitcher />
-            </div>
-            <LoginForm
-                style={{
-                    background: 'url("./images/logo.svg")'
+  return (
+    <div
+      className={`h-screen flex justify-center items-center bg-cover bg-center transition-all duration-300 ${
+        theme === "dark"
+          ? "bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900"
+          : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
+      }`}
+    >
+      <div className="absolute top-4 right-4 z-10 flex gap-3 items-center">
+        <ThemeSwitcher />
+        <LanguageSwitcher />
+      </div>
+      <div className="w-full max-w-md px-4">
+        <LoginForm
+          style={{
+            // background: 'url("./images/logo.svg")'
+          }}
+          title={t('title')}
+          // subTitle={t('subtitle')}
+          onFinish={handleSubmit}
+          submitter={{
+            searchConfig: {
+              submitText: t("loginButton"),
+            },
+          }}
+          // actions={
+          //     <div className="flex justify-center items-center flex-col">
+          //         <div className="block mb-6">
+          //             {t('otherLoginMethods')}
+          //         </div>
+          //         <div className="flex justify-center gap-6">
+          //             <AlipayCircleOutlined className="text-2xl text-[#1677ff] cursor-pointer" />
+          //             <TaobaoCircleOutlined className="text-2xl text-[#ff4d4f] cursor-pointer" />
+          //             <WeiboCircleOutlined className="text-2xl text-[#faad14] cursor-pointer" />
+          //         </div>
+          //     </div>
+          // }
+        >
+          <Tabs
+            activeKey={loginType}
+            onChange={(activeKey) => setLoginType(activeKey as LoginType)}
+            centered
+            items={[
+            //   {
+            //     key: "account",
+            //     label: t("accountLogin"),
+            //   },
+              // {
+              //     key: 'mobile',
+              //     label: t('phoneLogin'),
+              // },
+            ]}
+          />
+          {loginType === "account" && (
+            <>
+              <ProFormText
+                name="username"
+                fieldProps={{
+                  size: "large",
+                  prefix: <UserOutlined className={"prefixIcon"} />,
                 }}
-                title={t('title')}
-                // subTitle={t('subtitle')}
-                onFinish={handleSubmit}
-                submitter={{
-                    searchConfig: {
-                        submitText: t('loginButton'),
-                    },
+                placeholder={t("emailPlaceholder")}
+                rules={[
+                  {
+                    required: true,
+                    message: t("pleaseEnterUsername"),
+                  },
+                ]}
+              />
+              <ProFormText.Password
+                name="password"
+                fieldProps={{
+                  size: "large",
+                  prefix: <LockOutlined className={"prefixIcon"} />,
                 }}
-                actions={
-                    <div className="flex justify-center items-center flex-col">
-                        <div className="block mb-6">
-                            {t('otherLoginMethods')}
-                        </div>
-                        <div className="flex justify-center gap-6">
-                            <AlipayCircleOutlined className="text-2xl text-[#1677ff] cursor-pointer" />
-                            <TaobaoCircleOutlined className="text-2xl text-[#ff4d4f] cursor-pointer" />
-                            <WeiboCircleOutlined className="text-2xl text-[#faad14] cursor-pointer" />
-                        </div>
-                    </div>
-                }
-            >
-                <Tabs
-                    activeKey={loginType}
-                    onChange={(activeKey) => setLoginType(activeKey as LoginType)}
-                    centered
-                    items={[
-                        {
-                            key: 'account',
-                            label: t('accountLogin'),
-                        },
-                        // {
-                        //     key: 'mobile',
-                        //     label: t('phoneLogin'),
-                        // },
-                    ]}
-                />
-                {loginType === 'account' && (
-                    <>
-                        <ProFormText
-                            name="username"
-                            fieldProps={{
-                                size: 'large',
-                                prefix: <UserOutlined className={'prefixIcon'} />,
-                            }}
-                            placeholder={t('emailPlaceholder')}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: t('pleaseEnterUsername'),
-                                },
-                            ]}
-                        />
-                        <ProFormText.Password
-                            name="password"
-                            fieldProps={{
-                                size: 'large',
-                                prefix: <LockOutlined className={'prefixIcon'} />,
-                            }}
-                            placeholder={t('passwordPlaceholder')}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: t('pleaseEnterPassword'),
-                                },
-                            ]}
-                        />
-                    </>
-                )}
-                {/* {loginType === 'mobile' && (
+                placeholder={t("passwordPlaceholder")}
+                rules={[
+                  {
+                    required: true,
+                    message: t("pleaseEnterPassword"),
+                  },
+                ]}
+              />
+            </>
+          )}
+          {/* {loginType === 'mobile' && (
                     <>
                         <ProFormText
                             fieldProps={{
@@ -177,36 +188,35 @@ function LoginContent() {
                         />
                     </>
                 )} */}
-                <div className="mb-6">
-                    <ProFormCheckbox noStyle name="autoLogin">
-                        {t('rememberMe')}
-                    </ProFormCheckbox>
-                    <a className="float-right">
-                        {t('forgotPassword')}
-                    </a>
-                </div>
-            </LoginForm>
-        </div>
-    );
+          <div className="mb-6">
+            <ProFormCheckbox noStyle name="autoLogin">
+              {t("rememberMe")}
+            </ProFormCheckbox>
+            <a className="float-right">{t("forgotPassword")}</a>
+          </div>
+        </LoginForm>
+      </div>
+    </div>
+  );
 }
 
 export default function LoginPage() {
-    const [messages, setMessages] = useState<Record<string, string> | null>(null);
-    const { locale } = useLocale();
+  const [messages, setMessages] = useState<Record<string, string> | null>(null);
+  const { locale } = useLocale();
 
-    useEffect(() => {
-        import(`@/messages/${locale}.ts`).then((module) => {
-            setMessages(module.default);
-        });
-    }, [locale]);
+  useEffect(() => {
+    import(`@/messages/${locale}.ts`).then((module) => {
+      setMessages(module.default);
+    });
+  }, [locale]);
 
-    if (!messages) {
-        return null;
-    }
+  if (!messages) {
+    return null;
+  }
 
-    return (
-        <NextIntlClientProvider locale={locale} messages={messages}>
-            <LoginContent />
-        </NextIntlClientProvider>
-    );
+  return (
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <LoginContent />
+    </NextIntlClientProvider>
+  );
 }

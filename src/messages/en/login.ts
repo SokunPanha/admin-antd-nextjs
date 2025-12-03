@@ -1,5 +1,5 @@
 export default {
-  title: 'Ant Design Admin',
+  title: 'Admin Management',
   subtitle: "The world's most popular React UI library",
   accountLogin: 'Account Login',
   phoneLogin: 'Phone Login',
