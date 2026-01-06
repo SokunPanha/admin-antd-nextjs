@@ -1,31 +1,28 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { NextIntlClientProvider } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { useLocale } from '@/contexts/LocaleContext';
+import enMessages from '@/messages/en';
+import khMessages from '@/messages/kh';
+import PageLayout from '@/components/Layout';
 
-const PageLayout = dynamic(() => import('@/components/Layout'), {
-    ssr: false,
-});
+const messagesMap = {
+    en: enMessages,
+    zh: enMessages, // Fallback to English
+    km: khMessages,
+    'km-KH': khMessages,
+    kh: khMessages,
+} as const;
 
 export default function AdminLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const [messages, setMessages] = useState<Record<string, string> | null>(null);
     const { locale } = useLocale();
 
-    useEffect(() => {
-        import(`@/messages/${locale}.ts`).then((module) => {
-            setMessages(module.default);
-        });
-    }, [locale]);
-
-    if (!messages) {
-        return null;
-    }
+    const messages = useMemo(() => messagesMap[locale as keyof typeof messagesMap] || enMessages, [locale]);
 
     return( <PageLayout>
        <NextIntlClientProvider locale={locale} messages={messages}>

@@ -167,12 +167,12 @@ export const useDrawerForm = () => {
     useDrawEffect,
     dep,
     props: {
-      width: 900,
       labelCol: { span: 6 },
       form,
       visible: _open,
       onVisibleChange: setOpen,
       drawerProps: {
+        size: 900,
         maskClosable: false
       }
     },
