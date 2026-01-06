@@ -1,55 +1,36 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import getEnvironment from "@/core/config";
+import { NextRequest, NextResponse } from "next/server";
 
-const VALID_CREDENTIALS = {
-    email: 'admin@gmail.com',
-    password: 'admin',
-};
-
-export async function POST(request: NextRequest) {
-    try {
-        const body = await request.json();
-        const { email, password } = body;
-
-        // Validate credentials
-        if (email === VALID_CREDENTIALS.email && password === VALID_CREDENTIALS.password) {
-            // Create a simple token (in production, use proper JWT)
-            const token = Buffer.from(JSON.stringify({ email, timestamp: Date.now() })).toString('base64');
-
-            // Set cookie
-            const cookieStore = await cookies();
-            cookieStore.set('auth-token', token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'lax',
-                maxAge: 60 * 60 * 24 * 7, // 7 days
-                path: '/',
-            });
-
-            return NextResponse.json(
-                {
-                    success: true,
-                    message: 'Login successful',
-                    user: { email }
-                },
-                { status: 200 }
-            );
-        } else {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Invalid email or password'
-                },
-                { status: 401 }
-            );
-        }
-    } catch (error) {
-        return NextResponse.json(
-            {
-                success: false,
-                message: 'An error occurred during login'
+export async function POST(request: NextRequest){
+    try{
+        const body = await request.json()
+        const response = await fetch(getEnvironment().gateway + '/admin/v1/auth/login', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Accept-Language': request.headers.get('Accept-Language'),
             },
-            { status: 500 }
-        );
+            body: JSON.stringify(body)
+        })
+        const {data} = await response.json()
+       const res =   NextResponse.json(data)
+       res.cookies.set('access_token', data.access_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/'
+    })
+       res.cookies.set('refresh_token', data.refresh_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/'
+    })
+    return res
+    
+    }
+    catch(error){
+        console.log(error)
+        return NextResponse.json({error: 'Internal Server Error'}, {status: 500})
     }
 }

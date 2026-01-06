@@ -2,7 +2,7 @@
 
 import { QuestionCircleOutlined, BellOutlined, SearchOutlined } from "@ant-design/icons";
 import { ProLayout } from "@ant-design/pro-components";
-import { Dropdown, Input, Space, Button, message } from "antd";
+import { Dropdown, Input, Space, Button, App } from "antd";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { getUserMenuItems } from "./constants";
@@ -17,6 +17,7 @@ export default function PageLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
+  const { message } = App.useApp();
 
   const handleLogout = async () => {
     try {

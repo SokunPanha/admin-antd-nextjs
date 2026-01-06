@@ -2,6 +2,7 @@ import { message, notification } from "antd";
 // import { getEnvironment } from "../config";
 import type { RequestData } from "@ant-design/pro-components";
 import type { SortOrder } from "antd/es/table/interface";
+import getEnvironment from "../config";
 // import { getCurrentUser, clearCurrentUser, getCurrentRouter } from "../components/center";
 
 const failStatusMap: { [key: number]: string } = {
@@ -27,55 +28,17 @@ export class NetworkError extends Error {
 export const createApi =
   <T, R>(path: string) =>
   async (data: T, type = 1) => {
-    //@ts-ignore
-    const gateway = getEnvironment().gateway 
-    const language = localStorage.getItem("locale");
-    const res = await fetch( gateway + path, {
-      method: "POST",
-      headers: {
-        ...(type == 1 && { "Content-Type": "application/json" }),
-        // Authorization: `Bearer ${getCurrentUser()?.access_token}` || "",
-        "Accept-Language": language || "zh",
-      },
-      ...(type == 1 && { body: JSON.stringify(data) }),
-      ...(type == 2 && { body: data as FormData }),
-    });
+   const response = await fetch('/api/proxy' + path, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    // credentials: "include"
+   })
 
-    if (res.status === 201) {
+   if(response.status === 201){
+    return (await response.json()).data as R
+   }
 
-      return (await res.json()).data as R;
-    }
-
-    if (res.status === 401) {
-    //   clearCurrentUser();
-    //   getCurrentRouter().push({
-    //     path: "/login",
-    //     replace: true,
-    //   });
-      throw new NetworkError("401", "未登录", 401);
-    }
-
-    if (res.status in failStatusMap) {
-      throw new Error(failStatusMap[res.status]);
-    }
-
-    let json = { code: "", message: "" };
-    try {
-      json = await res.json();
-    } finally {
-      console.error("request error", json);
-    }
-
-    if (res.status === 400) {
-      notification.destroy();
-      notification.error({
-        message: json.message,
-        title: undefined
-      });
-
-      throw new Error(json.message);
-    }
-    throw new NetworkError(json.code, json.message, res.status);
+   
   };
 
 export const sync = async (fn: () => Promise<any>, { loading = true } = {}) => {

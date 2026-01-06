@@ -37,15 +37,16 @@ function LoginContent() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: values.username,
+          username: values.username,
           password: values.password,
         }),
       });
 
       const data = await response.json();
 
-      if (data.success) {
-        message.success(t("loginSuccess"));
+      if (data) {
+        console.log('success')
+        // message.success(t("loginSuccess"));
         router.push("/admin");
       } else {
         message.error(data.message || t("loginFailed"));

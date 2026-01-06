@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 
 export default function AdminDashboard() {
     const t = useTranslations()
+
     return (
         <PageContainer title={t('dashboard.title')}>
             <ProCard direction="column" ghost gutter={[0, 16]}>

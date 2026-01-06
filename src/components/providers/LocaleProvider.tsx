@@ -1,6 +1,6 @@
 "use client";
 
-import { ConfigProvider, theme } from "antd";
+import { ConfigProvider, theme, App } from "antd";
 import enUS from "antd/lib/locale/en_US";
 import zhCN from "antd/lib/locale/zh_CN";
 import kmKH from "antd/lib/locale/km_KH";
@@ -37,7 +37,9 @@ function LocaleProviderInner({ children, themeConfig }: LocaleProviderProps) {
   return (
     <ProProvider locale={locale}>
       <ConfigProvider locale={getAntdLocale()} theme={themeConfig}>
-        {children}
+        <App>
+          {children}
+        </App>
       </ConfigProvider>
     </ProProvider>
   );
