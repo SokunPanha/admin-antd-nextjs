@@ -47,22 +47,59 @@ main();
 
 function genHttpApi(path, desc) {
   const { get, post } = desc;
-  // 仅支持 json请求
-  const jsonRequest = post.requestBody.content["application/json"];
-  if (!jsonRequest) {
+
+  // Check if post method exists
+  if (!post) {
+    console.warn(`No POST method defined for ${path}, skipping...`);
     return;
   }
-  const requestType = trimPrefix(
-    jsonRequest.schema.$ref,
-    "#/components/schemas/"
-  );
-  const responseType = trimPrefix(
-    post.responses["200"].content["application/json"].schema.$ref,
-    "#/components/schemas/"
-  );
-  let api = `export const ${camelCase(
-    trimPrefix(path, prefix)
-  )}Api = createApi<${requestType},${responseType}>('${path}')\n`;
+
+  // Handle request body - some endpoints don't have requestBody (like logout, profile)
+  let requestType = "void";
+  const jsonRequest = post.requestBody?.content?.["application/json"];
+  if (jsonRequest?.schema?.$ref) {
+    requestType = trimPrefix(
+      jsonRequest.schema.$ref,
+      "#/components/schemas/"
+    );
+  }
+
+  // Handle response - try 200, 201, or first available response
+  let responseType = "unknown";
+  const responses = post.responses;
+
+  // Try common success status codes in order
+  const statusCodes = ["200", "201", "204"];
+  for (const statusCode of statusCodes) {
+    const response = responses?.[statusCode];
+    const responseContent = response?.content?.["application/json"];
+
+    if (responseContent?.schema?.$ref) {
+      responseType = trimPrefix(
+        responseContent.schema.$ref,
+        "#/components/schemas/"
+      );
+      break;
+    }
+  }
+
+  // If no response type found, skip this endpoint
+  if (responseType === "unknown") {
+    console.warn(`No valid response schema found for ${path}, skipping...`);
+    return;
+  }
+
+  // Generate the API
+  let apiName = camelCase(trimPrefix(path, prefix));
+
+  // Move "v1" or "V1" to the end with capital V
+  apiName = apiName.replace(/^v(\d+)/, () => '');
+
+  // Find version number and append it at the very end (after "Api")
+  const versionMatch = trimPrefix(path, prefix).match(/^v(\d+)/i);
+  const versionSuffix = versionMatch ? 'V' + versionMatch[1] : '';
+
+  let api = `export const ${apiName}Api${versionSuffix} = createApi<${requestType},${responseType}>('${path}')\n`;
   genFileDesc.apis[path] = api;
 }
 
