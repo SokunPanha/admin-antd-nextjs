@@ -8,8 +8,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { getUserMenuItems } from "./constants";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
-import { menuRoutes } from "./constants/menuRoutes";
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useEffect } from "react";
+import { useMenuData } from "./hooks/useMenuData";
+import { Spin, Alert } from "antd";
 
 export default function PageLayout({
   children,
@@ -19,6 +20,9 @@ export default function PageLayout({
   const pathname = usePathname();
   const router = useRouter();
   const { message } = App.useApp();
+
+  // Fetch dynamic menu data from API
+  const { menuData, loading: menuLoading, error: menuError } = useMenuData();
 
   const handleLogout = useCallback(async () => {
     try {
@@ -88,6 +92,59 @@ export default function PageLayout({
     ];
   }, []);
 
+  // Log menu state for debugging
+  useEffect(() => {
+    console.log('=== MENU STATE ===');
+    console.log('Loading:', menuLoading);
+    console.log('Error:', menuError);
+    console.log('Menu Data:', menuData);
+  }, [menuLoading, menuError, menuData]);
+
+  // Show loading spinner while fetching menu
+  if (menuLoading) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Spin size="large" tip="Loading menu...">
+          <div style={{ padding: 50 }} />
+        </Spin>
+      </div>
+    );
+  }
+
+  // Show error if menu failed to load
+  if (menuError || !menuData) {
+    return (
+      <main
+        style={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "20px",
+        }}
+      >
+        <Alert
+          message="Failed to Load Menu"
+          description={menuError || "Could not load menu data from API"}
+          type="error"
+          showIcon
+          action={
+            <Button onClick={() => window.location.reload()}>
+              Reload Page
+            </Button>
+          }
+        />
+      </main>
+    );
+  }
+
   return (
     <main
       style={{
@@ -108,7 +165,7 @@ export default function PageLayout({
         avatarProps={avatarProps}
         actionsRender={actionsRender}
         route={{
-          ...menuRoutes,
+          ...menuData,
         }}
       >
           {children}
