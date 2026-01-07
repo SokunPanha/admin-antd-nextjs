@@ -40,7 +40,46 @@ export const createApi =
 
       // Handle error cases
       if (!response.ok) {
-        const errorMsg = failStatusMap[response.status] || `请求失败 (${response.status})`;
+        // Try to parse error response body
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (e) {
+          // If JSON parsing fails, use default error message
+          const errorMsg = failStatusMap[response.status] || `请求失败 (${response.status})`;
+          throw new NetworkError(
+            String(response.status),
+            errorMsg,
+            response.status
+          );
+        }
+
+        // Handle validation errors (400 Bad Request)
+        if (response.status === 400 && errorData.message) {
+          const validationMessages = Array.isArray(errorData.message)
+            ? errorData.message
+            : [errorData.message];
+
+          // Display validation errors using notification
+          const formattedMessages = validationMessages.map((msg: string) => `• ${msg}`).join('\n');
+
+          notification.error({
+            message: 'Validation Error',
+            description: formattedMessages,
+            duration: 5,
+            style: { whiteSpace: 'pre-line' },
+            title: undefined
+          });
+
+          throw new NetworkError(
+            String(response.status),
+            validationMessages.join('; '),
+            response.status
+          );
+        }
+
+        // Handle other error cases
+        const errorMsg = errorData.message || failStatusMap[response.status] || `请求失败 (${response.status})`;
         throw new NetworkError(
           String(response.status),
           errorMsg,

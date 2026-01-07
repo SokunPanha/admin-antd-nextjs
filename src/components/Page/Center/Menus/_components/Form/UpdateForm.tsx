@@ -16,6 +16,7 @@ export default function UpdateForm() {
       title={t('modal.editMenu')}
       onFinish={formSubmitWrap(updateMenu)}
     >
+      <ProFormDigit name="id" hidden />
       <ProFormText
         name="code"
         label={t('label.code')}

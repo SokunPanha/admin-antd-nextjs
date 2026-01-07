@@ -81,12 +81,12 @@ export const useModalForm = () => {
           submitText: t("label.confirm"),
         },
       },
-      visible,
-      onVisibleChange: setVisible,
+      open: visible,
+      onOpenChange: setVisible,
       form,
       modalProps: {
         centered: true, // <-- centers the modal vertically
-        destroyOnHidden: true,
+        destroyOnClose: true,
         maskClosable: false,
       }
     },
@@ -169,8 +169,8 @@ export const useDrawerForm = () => {
     props: {
       labelCol: { span: 6 },
       form,
-      visible: _open,
-      onVisibleChange: setOpen,
+      open: _open,
+      onOpenChange: setOpen,
       drawerProps: {
         size: 900,
         maskClosable: false

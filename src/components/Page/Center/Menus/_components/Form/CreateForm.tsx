@@ -24,14 +24,14 @@ export default function CreateForm() {
       />
 
       <ProFormText
-        name="label_en"
+        name={["labels", 'en']}
         label={t('label.labelEn')}
         rules={[{ required: true, message: t('validation.required') }]}
         placeholder="English label"
       />
 
       <ProFormText
-        name="label_kh"
+        name={["labels", 'kh']}
         label={t('label.labelKh')}
         placeholder="Khmer label (optional)"
       />
@@ -43,7 +43,7 @@ export default function CreateForm() {
       />
 
       <ProFormText
-        name="path"
+        name="route_path"
         label={t('label.path')}
         placeholder="e.g., /admin/dashboard"
       />

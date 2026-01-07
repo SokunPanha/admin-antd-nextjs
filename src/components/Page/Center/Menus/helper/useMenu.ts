@@ -3,6 +3,7 @@ import { SystemSettingMenusCreateApiV1, SystemSettingMenusUpdateApiV1, SystemSet
 import { useTranslations } from 'next-intl';
 import { useMenusPageContext } from './hooks';
 import { filterRequestParam } from '@/core/libs/base';
+import { useCallback } from 'react';
 
 // Form values type (what comes from the form before transformation)
 
@@ -12,9 +13,10 @@ export default function useMenu() {
     const t = useTranslations();
     const context = useMenusPageContext();
 
-    const createMenu = async (values: MenuCreateRequest) => {
+    const createMenu = useCallback(async (params: MenuCreateRequest) => {
+
         try {
-            await SystemSettingMenusCreateApiV1(filterRequestParam(values));
+            await SystemSettingMenusCreateApiV1(filterRequestParam(params));
 
             message.success(t('message.createSuccess'));
             context.table.reload();
@@ -22,9 +24,9 @@ export default function useMenu() {
         } catch (error) {
             message.error(t('message.createFailed'));
         }
-    };
+    }, [message, t, context.table]);
 
-    const updateMenu = async (params: MenuUpdateRequest) => {
+    const updateMenu = useCallback(async (params: MenuUpdateRequest) => {
         try {
             await SystemSettingMenusUpdateApiV1({
                 ...params
@@ -35,9 +37,9 @@ export default function useMenu() {
         } catch (error) {
             message.error(t('message.updateFailed'));
         }
-    };
+    }, [message, t, context.table]);
 
-    const deleteMenu = async (params: MenuDeleteRequest) => {
+    const deleteMenu = useCallback(async (params: MenuDeleteRequest) => {
         modal.confirm({
             title: t('modal.confirmDelete'),
             content: t('modal.confirmDeleteMenu'),
@@ -51,9 +53,9 @@ export default function useMenu() {
                 }
             }
         });
-    };
+    }, [modal, t, message, context.table]);
 
-    const updateMenuStatus = async (params: MenuUpdateStatusRequest) => {
+    const updateMenuStatus = useCallback(async (params: MenuUpdateStatusRequest) => {
         modal.confirm({
             title: t('modal.confirmStatusChange'),
             content: params.status === 'active'
@@ -75,7 +77,7 @@ export default function useMenu() {
                 context.table.reload();
             }
         });
-    };
+    }, [modal, t, message, context.table]);
 
     return {
         createMenu,

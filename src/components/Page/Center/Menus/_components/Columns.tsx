@@ -96,7 +96,7 @@ export default function Columns(
             />
             <MdDelete
               color="red"
-              onClick={() => deleteMenu(record)}
+              onClick={() => deleteMenu({ id: record.id })}
               size={20}
               className="cursor-pointer"
             />
