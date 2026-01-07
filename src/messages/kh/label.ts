@@ -70,5 +70,8 @@ export default {
   path: 'ផ្លូវ',
   sortOrder: 'លំដាប់តម្រៀប',
   parentId: 'លេខសម្គាល់មេ',
+  parentMenu: 'ម៉ឺនុយមេ',
+  selectParentMenu: 'ជ្រើសរើសម៉ឺនុយមេ',
+  noParent: 'គ្មានមេ (កម្រិតកំពូល)',
   visible: 'មើលឃើញ',
 } as const;

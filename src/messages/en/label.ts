@@ -70,5 +70,8 @@ export default {
   path: 'Path',
   sortOrder: 'Sort Order',
   parentId: 'Parent ID',
+  parentMenu: 'Parent Menu',
+  selectParentMenu: 'Select parent menu',
+  noParent: 'No Parent (Top Level)',
   visible: 'Visible',
 } as const;
