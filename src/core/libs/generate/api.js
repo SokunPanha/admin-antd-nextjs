@@ -134,8 +134,20 @@ function getTsObject(name, desc) {
 }
 
 function getTsType(property) {
+  // Handle allOf pattern (used for composition/inheritance)
+  if (property.allOf && Array.isArray(property.allOf)) {
+    // Look for $ref in allOf array
+    for (const item of property.allOf) {
+      if (item.$ref) {
+        const refType = item.$ref.split("/").pop();
+        return refType.replace(".", "");
+      }
+    }
+  }
+
   switch (property.type) {
     case "integer":
+    case "bigint":
       return "number";
     case "array":
       let arrRef = property.items.$ref;
@@ -143,16 +155,20 @@ function getTsType(property) {
         let refType = arrRef.split("/").pop();
         switch (refType) {
           case "string":
+          case "varchar":
             return "string[]";
           case "int":
+          case "bigint":
             return "number[]";
         }
         return `${refType.replace(".", "")}[]`;
       }
       return `${getTsType(property.items)}[]`;
     case "string":
+    case "varchar":
       return "string";
     case "bool":
+    case "boolean":
       return "boolean";
     default:
       let objRef = property.$ref;
@@ -164,13 +180,19 @@ function getTsType(property) {
         if (refType === "json.RawMessage") {
           return "any";
         }
-        if (refType === "bool") {
+        if (refType === "bool" || refType === "boolean") {
           return "boolean";
+        }
+        if (refType === "bigint") {
+          return "number";
+        }
+        if (refType === "varchar") {
+          return "string";
         }
 
         return refType.replace(".", "");
       }
-      return property.type;
+      return property.type || "any";
   }
 }
 
