@@ -7,5 +7,13 @@ export default {
   country: 'Country',
   cityname: 'City Name',
   created_at: 'Created At',
-  action: "Action"
+  createdAt: 'Created At',
+  action: "Action",
+  code: 'Code',
+  label: 'Label',
+  icon: 'Icon',
+  path: 'Path',
+  sortOrder: 'Sort Order',
+  status: 'Status',
+  visible: 'Visible',
 } as const;

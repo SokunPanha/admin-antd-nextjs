@@ -63,4 +63,12 @@ export default {
   enterProductName: 'បញ្ចូលឈ្មោះផលិតផល',
   enterProductPrice: 'បញ្ចូលតម្លៃផលិតផល',
   searchPlaceholder: 'ស្វែងរក...',
+  code: 'លេខកូដ',
+  labelEn: 'ស្លាក (អង់គ្លេស)',
+  labelKh: 'ស្លាក (ខ្មែរ)',
+  icon: 'រូបតំណាង',
+  path: 'ផ្លូវ',
+  sortOrder: 'លំដាប់តម្រៀប',
+  parentId: 'លេខសម្គាល់មេ',
+  visible: 'មើលឃើញ',
 } as const;

@@ -43,5 +43,10 @@ export default {
   feedback: 'Feedback',
   reportIssue: 'Report Issue',
   shareThis: 'Share This',
-  create_form: "Create Form"
+  create_form: "Create Form",
+  addMenu: 'Add Menu',
+  editMenu: 'Edit Menu',
+  deleteMenu: 'Delete Menu',
+  confirmDelete: 'Confirm Delete',
+  confirmDeleteMenu: 'Are you sure you want to delete this menu item?',
 } as const;

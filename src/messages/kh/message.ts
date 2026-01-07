@@ -36,4 +36,5 @@ export default {
   noChanges: 'គ្មានការផ្លាស់ប្ដូរត្រូវបានរកឃើញ',
   maxFileSizeExceeded: 'ទំហំឯកសារលើសពីដែនកំណត់អតិបរមា',
   invalidFileType: 'ប្រភេទឯកសារមិនត្រឹមត្រូវ',
+  statusUpdated: 'ស្ថានភាពត្រូវបានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ',
 } as const;

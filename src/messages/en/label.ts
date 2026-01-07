@@ -63,4 +63,12 @@ export default {
   enterProductName: 'Enter product name',
   enterProductPrice: 'Enter product price',
   searchPlaceholder: 'Search...',
+  code: 'Code',
+  labelEn: 'Label (English)',
+  labelKh: 'Label (Khmer)',
+  icon: 'Icon',
+  path: 'Path',
+  sortOrder: 'Sort Order',
+  parentId: 'Parent ID',
+  visible: 'Visible',
 } as const;

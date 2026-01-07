@@ -44,4 +44,9 @@ export default {
   reportIssue: 'រាយការណ៍បញ្ហា',
   shareThis: 'ចែករំលែកនេះ',
   create_form: 'បង្កើតទម្រង់',
+  addMenu: 'បន្ថែមម៉ឺនុយ',
+  editMenu: 'កែសម្រួលម៉ឺនុយ',
+  deleteMenu: 'លុបម៉ឺនុយ',
+  confirmDelete: 'បញ្ជាក់ការលុប',
+  confirmDeleteMenu: 'តើអ្នកប្រាកដថាចង់លុបធាតុម៉ឺនុយនេះទេ?',
 } as const;

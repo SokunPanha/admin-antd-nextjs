@@ -36,4 +36,5 @@ export default {
   noChanges: 'No changes detected',
   maxFileSizeExceeded: 'File size exceeds the maximum limit',
   invalidFileType: 'Invalid file type',
+  statusUpdated: 'Status updated successfully',
 } as const;

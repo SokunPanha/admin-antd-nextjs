@@ -7,5 +7,13 @@ export default {
   country: 'ប្រទេស',
   cityname: 'ឈ្មោះទីក្រុង',
   created_at: 'បានបង្កើតនៅ',
-  action: "សកម្មភាព"
+  createdAt: 'បានបង្កើតនៅ',
+  action: "សកម្មភាព",
+  code: 'លេខកូដ',
+  label: 'ស្លាក',
+  icon: 'រូបតំណាង',
+  path: 'ផ្លូវ',
+  sortOrder: 'លំដាប់តម្រៀប',
+  status: 'ស្ថានភាព',
+  visible: 'មើលឃើញ',
 } as const;
