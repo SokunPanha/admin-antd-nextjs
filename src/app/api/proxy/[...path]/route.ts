@@ -20,54 +20,69 @@ export async function POST(request: NextRequest) {
             }
         }
 
-        const response = await fetch(getEnvironment().gateway + path, {
+        let response = await fetch(getEnvironment().gateway + path, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
-                // 'Accept-Language': request.headers.get('Accept-Language'),
                 'Authorization': `Bearer ${access_token}`,
             },
             body: body ? JSON.stringify(body) : undefined
         })
 
+        // If unauthorized and we have a refresh token, try to refresh
         if (response.status === 401 && refresh_token) {
-
             const refreshRes = await fetch(getEnvironment().gateway + '/admin/v1/auth/refresh', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
-                    // 'Accept-Language': request.headers.get('Accept-Language'),
-                    'Authorization': `Bearer ${refresh_token}`,
                 },
                 body: JSON.stringify({ refresh_token })
             })
 
             if (refreshRes.ok) {
-                const token = await refreshRes.json()
+                const tokenData = await refreshRes.json()
+                const newAccessToken = tokenData.data?.access_token
+                const newRefreshToken = tokenData.data?.refresh_token
 
-                // Get the original response data
-                const data = await response.json()
+                if (newAccessToken) {
+                    // Retry the original request with the new access token
+                    response = await fetch(getEnvironment().gateway + path, {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${newAccessToken}`,
+                        },
+                        body: body ? JSON.stringify(body) : undefined
+                    })
 
-                // Create a new response with the refreshed tokens set as cookies
-                const nextResponse = NextResponse.json(data, { status: response.status })
-                nextResponse.cookies.set('access_token', token.access_token, {
-                    httpOnly: true,
-                    secure: process.env.NODE_ENV === 'production',
-                    sameSite: 'lax',
-                    path: '/'
-                })
-                nextResponse.cookies.set('refresh_token', token.refresh_token, {
-                    httpOnly: true,
-                    secure: process.env.NODE_ENV === 'production',
-                    sameSite: 'lax',
-                    path: '/'
-                })
+                    // Get the response data
+                    const data = await response.json()
 
-                return nextResponse
+                    // Create a response with the new tokens set as cookies
+                    const nextResponse = NextResponse.json(data, { status: response.status })
+                    nextResponse.cookies.set('access_token', newAccessToken, {
+                        httpOnly: true,
+                        secure: process.env.NODE_ENV === 'production',
+                        sameSite: 'lax',
+                        path: '/'
+                    })
+                    if (newRefreshToken) {
+                        nextResponse.cookies.set('refresh_token', newRefreshToken, {
+                            httpOnly: true,
+                            secure: process.env.NODE_ENV === 'production',
+                            sameSite: 'lax',
+                            path: '/'
+                        })
+                    }
+
+                    return nextResponse
+                }
             }
         }
 
-        return response
+        // Return the original response if no refresh was needed or refresh failed
+        const data = await response.json()
+        return NextResponse.json(data, { status: response.status })
     }
     catch (error) {
         console.error(error)
