@@ -27,19 +27,30 @@ export class NetworkError extends Error {
 // type = 2  upload file
 export const createApi =
   <T, R>(path: string) =>
-  async (data: T, type = 1) => {
-   const response = await fetch('/api/proxy' + path, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    // credentials: "include"
-   })
+    async (data: T, type = 1): Promise<R> => {
+      const response = await fetch('/api/proxy' + path, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        // credentials: "include"
+      })
 
-   if(response.status === 201){
-    return (await response.json()).data as R
-   }
+      if (response.status === 201) {
+        return (await response.json()).data as R
+      }
 
-   
-  };
+      // Handle error cases
+      if (!response.ok) {
+        const errorMsg = failStatusMap[response.status] || `请求失败 (${response.status})`;
+        throw new NetworkError(
+          String(response.status),
+          errorMsg,
+          response.status
+        );
+      }
+
+      // For other successful status codes
+      return (await response.json()).data as R;
+    };
 
 export const sync = async (fn: () => Promise<any>, { loading = true } = {}) => {
   let close;
@@ -119,42 +130,44 @@ function getErrMsg(e: unknown): string {
 
 // form submit wrapper with sync
 export const formSubmitWrap =
-  <T>(fn: (value: unknown) => void, finallyFunc: () => void = () => {}) =>
-  async (formData: T): Promise<boolean | void> => {
-    let isSuccess = false;
-    await sync(
-      async () => {
-        try {
-          await fn(formData);
-          isSuccess = true;
-        } finally {
-          if (finallyFunc) {
-            finallyFunc();
+  <T>(fn: (value: T) => Promise<void>, finallyFunc: () => void = () => { }) =>
+    async (formData: T): Promise<boolean | void> => {
+      let isSuccess = false;
+      await sync(
+        async () => {
+          try {
+            await fn(formData);
+            isSuccess = true;
+          } finally {
+            if (finallyFunc) {
+              finallyFunc();
+            }
           }
-        }
-      },
-      { loading: false }
-    );
-    return isSuccess;
-  };
+        },
+        { loading: false }
+      );
+      return isSuccess;
+    };
 
 // pro table request wrapper with sync
-export const tableRequestWrap =
-  (
-    fn: (
-      params: { pageSize?: number; current?: number; [keyword: string]: unknown },
-      sort: Record<string, SortOrder>,
-      filter: Record<string, (string | number)[] | null>
-    ) => void
-  ) =>
-  async <T>(
+export const tableRequestWrap = <T = any>(
+  fn: (params: any) => Promise<{ data: T[]; total: number; success: boolean }>
+) =>
+  async (
     params: { pageSize?: number; current?: number; keyword?: string },
     sort: Record<string, SortOrder>,
     filter: Record<string, (string | number)[] | null>
-  ): Promise<Partial<RequestData<T>>> => {
+  ): Promise<RequestData<T>> => {
     return await sync(
-      async (): Promise<unknown> => {
-        return fn({...params,page_size: params.pageSize, page: params.current, }, sort, filter);
+      async () => {
+        const { pageSize, current, ...restParams } = params;
+        return fn({
+          ...restParams,
+          page_size: pageSize || 10,
+          page: current || 1,
+          sort,
+          filters: filter
+        });
       },
       { loading: false }
     );
