@@ -166,7 +166,6 @@ export const tableRequestWrap = <T = any>(
           page_size: pageSize || 10,
           page: current || 1,
           sort,
-          filters: filter
         });
       },
       { loading: false }
