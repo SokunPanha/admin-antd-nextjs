@@ -26,6 +26,7 @@ export const SystemSettingMenusListApiV1 = createApi<MenuListRequest,MenuListRes
 export const SystemSettingMenusUpdateApiV1 = createApi<MenuUpdateRequest,MenuUpdateResponse>('/admin/v1/system-setting/menus/update')
 export const SystemSettingMenusDeleteApiV1 = createApi<MenuDeleteRequest,MenuDeleteResponse>('/admin/v1/system-setting/menus/delete')
 export const SystemSettingMenusUpdateStatusApiV1 = createApi<MenuUpdateStatusRequest,MenuUpdateStatusResponse>('/admin/v1/system-setting/menus/update-status')
+export const SystemSettingMenusParentMenuMasterdataApiV1 = createApi<ParentMenuMasterdataRequest,ParentMenuMasterdataResponse>('/admin/v1/system-setting/menus/parent-menu/masterdata')
 
 export type AuthRegisterRequest = {
   username: string;
@@ -360,4 +361,18 @@ export type MenuUpdateStatusRequest = {
 
 export type MenuUpdateStatusResponse = {
 
+}
+
+export type ParentMenuMasterdataRequest = {
+  status: string;
+}
+
+export type ParentMenuMasterdataItem = {
+  id: number;
+  code: string;
+  label: string;
+}
+
+export type ParentMenuMasterdataResponse = {
+  items: ParentMenuMasterdataItem[];
 }
