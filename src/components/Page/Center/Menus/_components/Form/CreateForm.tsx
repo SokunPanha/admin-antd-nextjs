@@ -3,6 +3,7 @@ import { useMenusPageContext } from '../../helper/hooks'
 import { useTranslations } from 'next-intl'
 import useMenu from '../../helper/useMenu'
 import { formSubmitWrap } from '@/core/services'
+import AutoCompleteParentMenu from '@/components/Common/AutoComplete/AutoCompleteParentMenu'
 
 export default function CreateForm() {
     const {createForm} = useMenusPageContext()
@@ -58,16 +59,7 @@ export default function CreateForm() {
         }}
       />
 
-      <ProFormDigit
-        name="parent_id"
-        label={t('label.parentId')}
-        min={0}
-        initialValue={0}
-        fieldProps={{
-          precision: 0,
-        }}
-        tooltip="Use 0 for top-level menu items"
-      />
+      <AutoCompleteParentMenu />
 
       <ProFormSwitch
         name="is_visible"
