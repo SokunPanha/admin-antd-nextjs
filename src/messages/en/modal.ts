@@ -49,4 +49,7 @@ export default {
   deleteMenu: 'Delete Menu',
   confirmDelete: 'Confirm Delete',
   confirmDeleteMenu: 'Are you sure you want to delete this menu item?',
+  confirmStatusChange: 'Confirm Status Change',
+  confirmEnableMenu: 'Are you sure you want to enable this menu?',
+  confirmDisableMenu: 'Are you sure you want to disable this menu?',
 } as const;

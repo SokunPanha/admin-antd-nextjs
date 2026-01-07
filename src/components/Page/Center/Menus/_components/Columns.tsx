@@ -2,13 +2,12 @@ import { defineColumns } from "@/core/libs/base";
 import { Tag, Switch } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
-import { MenuUpdateRequest } from "@/core/services/api";
 
 export default function Columns(
   t: (key: string) => string,
   context: ReturnType<typeof import("../helper/hooks").useMenusPageContext>,
   deleteMenu: (record: { id: number }) => void,
-  updateMenuStatus: (params: MenuUpdateRequest) => void
+  updateMenuStatus: (params: { id: number; status: string }) => void
 ) {
 
   return defineColumns([
@@ -69,8 +68,8 @@ export default function Columns(
       width: 100,
       render: (_: any, record: any) => (
         <Switch
-          checked={record.is_visible}
-          onChange={(checked) => updateMenuStatus({ ...record, is_visible: checked })}
+          checked={record.status === "active"}
+          onChange={(checked) => updateMenuStatus({ id: record.id, status: checked ? "active" : "inactive" })}
         />
       ),
     },

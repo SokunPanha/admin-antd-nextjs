@@ -1,5 +1,5 @@
 import { App } from 'antd';
-import { SystemSettingMenusCreateApiV1, SystemSettingMenusUpdateApiV1, SystemSettingMenusDeleteApiV1, SystemSettingMenusUpdateStatusApiV1, MenuCreateRequest, MenuUpdateRequest, MenuDeleteRequest } from '@/core/services/api';
+import { SystemSettingMenusCreateApiV1, SystemSettingMenusUpdateApiV1, SystemSettingMenusDeleteApiV1, SystemSettingMenusUpdateStatusApiV1, MenuCreateRequest, MenuUpdateRequest, MenuDeleteRequest, MenuUpdateStatusRequest } from '@/core/services/api';
 import { useTranslations } from 'next-intl';
 import { useMenusPageContext } from './hooks';
 import { filterRequestParam } from '@/core/libs/base';
@@ -53,16 +53,28 @@ export default function useMenu() {
         });
     };
 
-    const updateMenuStatus = async (params: MenuUpdateRequest) => {
-        try {
-            await SystemSettingMenusUpdateStatusApiV1(filterRequestParam(params));
-            message.success(t('message.statusUpdated'));
-            context.table.reload();
-            return true;
-        } catch (error) {
-            message.error(t('message.updateFailed'));
-            return false;
-        }
+    const updateMenuStatus = async (params: MenuUpdateStatusRequest) => {
+        modal.confirm({
+            title: t('modal.confirmStatusChange'),
+            content: params.status === 'active'
+                ? t('modal.confirmEnableMenu')
+                : t('modal.confirmDisableMenu'),
+            onOk: async () => {
+                try {
+                    await SystemSettingMenusUpdateStatusApiV1(filterRequestParam(params));
+                    message.success(t('message.statusUpdated'));
+                    context.table.reload();
+                    return true;
+                } catch (error) {
+                    message.error(t('message.updateFailed'));
+                    return false;
+                }
+            },
+            onCancel: () => {
+                // Reload table to reset the switch state
+                context.table.reload();
+            }
+        });
     };
 
     return {

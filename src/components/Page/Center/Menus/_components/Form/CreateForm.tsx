@@ -15,7 +15,6 @@ export default function CreateForm() {
       {...createForm.props}
       title={t('modal.addMenu')}
       onFinish={formSubmitWrap(createMenu)}
-      layout="horizontal"
     >
       <ProFormText
         name="code"

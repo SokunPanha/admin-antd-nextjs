@@ -49,4 +49,7 @@ export default {
   deleteMenu: 'លុបម៉ឺនុយ',
   confirmDelete: 'បញ្ជាក់ការលុប',
   confirmDeleteMenu: 'តើអ្នកប្រាកដថាចង់លុបធាតុម៉ឺនុយនេះទេ?',
+  confirmStatusChange: 'បញ្ជាក់ការផ្លាស់ប្ដូរស្ថានភាព',
+  confirmEnableMenu: 'តើអ្នកប្រាកដថាចង់បើកម៉ឺនុយនេះទេ?',
+  confirmDisableMenu: 'តើអ្នកប្រាកដថាចង់បិទម៉ឺនុយនេះទេ?',
 } as const;
