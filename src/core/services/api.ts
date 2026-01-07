@@ -40,12 +40,12 @@ export type AuthRegisterResponse = {
   id: number;
   username: string;
   email: string;
-  first_name: object;
-  last_name: object;
-  phone_number: object;
-  avatar_url: object;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  avatar_url: string;
   status: string;
-  last_login_at: object;
+  last_login_at: string;
 }
 
 export type AuthLoginRequest = {
@@ -77,23 +77,30 @@ export type AuthProfileResponse = {
   id: number;
   username: string;
   email: string;
-  first_name: object;
-  last_name: object;
-  phone_number: object;
-  avatar_url: object;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  avatar_url: string;
   status: string;
-  last_login_at: object;
+  last_login_at: string;
+}
+
+export type MultiLanguageText = {
+  // English text
+  en: string;
+  // Khmer text
+  kh: string;
 }
 
 export type MenuItemData = {
   id: number;
-  parent_id: object;
+  parent_id: number;
   code: string;
-  labels: object;
-  icon: object;
-  route_path: object;
+  labels: MultiLanguageText;
+  icon: string;
+  route_path: string;
   sort_order: number;
-  children: object[];
+  children: MenuItemData[];
 }
 
 export type AuthMenusResponse = {
@@ -112,12 +119,18 @@ export type CenterUserCreateRequest = {
 }
 
 export type CenterUserCreateResponse = {
-  code: number;
-  message: string;
-  data: object;
+
 }
 
-export type ListCenterUsersFilters = {
+export type SortDto = {
+  field: string;
+  order: string;
+}
+
+export type CenterUserListRequest = {
+  page: number;
+  page_size: number;
+  sort: SortDto;
   id: number;
   username: string;
   email: string;
@@ -128,24 +141,16 @@ export type ListCenterUsersFilters = {
   created_at_to: string;
 }
 
-export type CenterUserListRequest = {
-  page: number;
-  page_size: number;
-  keyword: string;
-  sort: object;
-  filters: ListCenterUsersFilters;
-}
-
 export type CenterUserItem = {
   id: number;
   username: string;
   email: string;
-  first_name: object;
-  last_name: object;
-  phone_number: object;
-  avatar_url: object;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  avatar_url: string;
   status: string;
-  last_login_at: object;
+  last_login_at: string;
   created_at: string;
   updated_at: string;
 }
@@ -167,9 +172,7 @@ export type CenterUserUpdateRequest = {
 }
 
 export type CenterUserUpdateResponse = {
-  code: number;
-  message: string;
-  data: object;
+
 }
 
 export type CenterUserDeleteRequest = {
@@ -177,9 +180,7 @@ export type CenterUserDeleteRequest = {
 }
 
 export type CenterUserDeleteResponse = {
-  code: number;
-  message: string;
-  data: object;
+
 }
 
 export type CenterUserUpdateStatusRequest = {
@@ -188,9 +189,7 @@ export type CenterUserUpdateStatusRequest = {
 }
 
 export type CenterUserUpdateStatusResponse = {
-  code: number;
-  message: string;
-  data: object;
+
 }
 
 export type CenterUserAssignRolesRequest = {
@@ -199,9 +198,7 @@ export type CenterUserAssignRolesRequest = {
 }
 
 export type CenterUserAssignRolesResponse = {
-  code: number;
-  message: string;
-  data: object;
+
 }
 
 export type RoleCreateRequest = {
@@ -212,12 +209,13 @@ export type RoleCreateRequest = {
 }
 
 export type RoleCreateResponse = {
-  code: number;
-  message: string;
-  data: object;
+
 }
 
-export type ListRolesFilters = {
+export type RoleListRequest = {
+  page: number;
+  page_size: number;
+  sort: SortDto;
   id: number;
   name: string;
   code: string;
@@ -227,19 +225,11 @@ export type ListRolesFilters = {
   created_at_to: string;
 }
 
-export type RoleListRequest = {
-  page: number;
-  page_size: number;
-  keyword: string;
-  sort: object;
-  filters: ListRolesFilters;
-}
-
 export type RoleItem = {
   id: number;
   name: string;
   code: string;
-  description: object;
+  description: string;
   status: string;
   created_at: string;
   updated_at: string;
@@ -259,9 +249,7 @@ export type RoleUpdateRequest = {
 }
 
 export type RoleUpdateResponse = {
-  code: number;
-  message: string;
-  data: object;
+
 }
 
 export type RoleDeleteRequest = {
@@ -269,9 +257,7 @@ export type RoleDeleteRequest = {
 }
 
 export type RoleDeleteResponse = {
-  code: number;
-  message: string;
-  data: object;
+
 }
 
 export type RoleUpdateStatusRequest = {
@@ -280,9 +266,7 @@ export type RoleUpdateStatusRequest = {
 }
 
 export type RoleUpdateStatusResponse = {
-  code: number;
-  message: string;
-  data: object;
+
 }
 
 export type RoleAssignMenusRequest = {
@@ -291,16 +275,14 @@ export type RoleAssignMenusRequest = {
 }
 
 export type RoleAssignMenusResponse = {
-  code: number;
-  message: string;
-  data: object;
+
 }
 
 export type MenuCreateRequest = {
   parent_id: number;
   code: string;
   // Multi-language labels
-  labels: object;
+  labels: MultiLanguageText;
   icon: string;
   route_path: string;
   sort_order: number;
@@ -309,15 +291,16 @@ export type MenuCreateRequest = {
 }
 
 export type MenuCreateResponse = {
-  code: number;
-  message: string;
-  data: object;
+
 }
 
-export type ListMenusFilters = {
+export type MenuListRequest = {
+  page: number;
+  page_size: number;
+  sort: SortDto;
   id: number;
   // null for root menus
-  parent_id: object;
+  parent_id: number;
   code: string;
   status: string;
   is_visible: boolean;
@@ -326,21 +309,13 @@ export type ListMenusFilters = {
   created_at_to: string;
 }
 
-export type MenuListRequest = {
-  page: number;
-  page_size: number;
-  keyword: string;
-  sort: object;
-  filters: ListMenusFilters;
-}
-
 export type MenuItem = {
   id: number;
-  parent_id: object;
+  parent_id: number;
   code: string;
-  labels: object;
-  icon: object;
-  route_path: object;
+  labels: MultiLanguageText;
+  icon: string;
+  route_path: string;
   sort_order: number;
   status: string;
   is_visible: boolean;
@@ -357,7 +332,7 @@ export type MenuUpdateRequest = {
   parent_id: number;
   code: string;
   // Multi-language labels
-  labels: object;
+  labels: MultiLanguageText;
   icon: string;
   route_path: string;
   sort_order: number;
@@ -367,9 +342,7 @@ export type MenuUpdateRequest = {
 }
 
 export type MenuUpdateResponse = {
-  code: number;
-  message: string;
-  data: object;
+
 }
 
 export type MenuDeleteRequest = {
@@ -377,9 +350,7 @@ export type MenuDeleteRequest = {
 }
 
 export type MenuDeleteResponse = {
-  code: number;
-  message: string;
-  data: object;
+
 }
 
 export type MenuUpdateStatusRequest = {
@@ -388,7 +359,5 @@ export type MenuUpdateStatusRequest = {
 }
 
 export type MenuUpdateStatusResponse = {
-  code: number;
-  message: string;
-  data: object;
+
 }
