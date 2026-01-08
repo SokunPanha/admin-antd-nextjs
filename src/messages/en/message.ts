@@ -37,4 +37,6 @@ export default {
   maxFileSizeExceeded: 'File size exceeds the maximum limit',
   invalidFileType: 'Invalid file type',
   statusUpdated: 'Status updated successfully',
+  menusAssignedSuccess: 'Menus assigned successfully',
+  menusAssignedFailed: 'Failed to assign menus',
 } as const;

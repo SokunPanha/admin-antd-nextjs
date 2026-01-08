@@ -74,4 +74,6 @@ export default {
   selectParentMenu: 'Select parent menu',
   noParent: 'No Parent (Top Level)',
   visible: 'Visible',
+  menus: 'Menus',
+  roleName: 'Role Name',
 } as const;

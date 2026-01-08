@@ -74,4 +74,6 @@ export default {
   selectParentMenu: 'ជ្រើសរើសម៉ឺនុយមេ',
   noParent: 'គ្មានមេ (កម្រិតកំពូល)',
   visible: 'មើលឃើញ',
+  menus: 'ម៉ឺនុយ',
+  roleName: 'ឈ្មោះតួនាទី',
 } as const;

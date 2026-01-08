@@ -52,4 +52,11 @@ export default {
   confirmStatusChange: 'Confirm Status Change',
   confirmEnableMenu: 'Are you sure you want to enable this menu?',
   confirmDisableMenu: 'Are you sure you want to disable this menu?',
+  addRole: 'Add Role',
+  editRole: 'Edit Role',
+  deleteRole: 'Delete Role',
+  confirmDeleteRole: 'Are you sure you want to delete this role?',
+  confirmEnableRole: 'Are you sure you want to enable this role?',
+  confirmDisableRole: 'Are you sure you want to disable this role?',
+  assignMenus: 'Assign Menus to Role',
 } as const;

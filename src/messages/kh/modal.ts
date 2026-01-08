@@ -52,4 +52,11 @@ export default {
   confirmStatusChange: 'បញ្ជាក់ការផ្លាស់ប្ដូរស្ថានភាព',
   confirmEnableMenu: 'តើអ្នកប្រាកដថាចង់បើកម៉ឺនុយនេះទេ?',
   confirmDisableMenu: 'តើអ្នកប្រាកដថាចង់បិទម៉ឺនុយនេះទេ?',
+  addRole: 'បន្ថែមតួនាទី',
+  editRole: 'កែសម្រួលតួនាទី',
+  deleteRole: 'លុបតួនាទី',
+  confirmDeleteRole: 'តើអ្នកប្រាកដថាចង់លុបតួនាទីនេះទេ?',
+  confirmEnableRole: 'តើអ្នកប្រាកដថាចង់បើកតួនាទីនេះទេ?',
+  confirmDisableRole: 'តើអ្នកប្រាកដថាចង់បិទតួនាទីនេះទេ?',
+  assignMenus: 'កំណត់ម៉ឺនុយទៅតួនាទី',
 } as const;
