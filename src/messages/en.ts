@@ -10,6 +10,8 @@ import validation from './en/validation';
 import menu from './en/menu';
 import dashboard from './en/dashboard';
 import login from './en/login';
+import button from './en/button';
+import placeholder from './en/placeholder';
 
 export default {
   common: {...common},
@@ -24,4 +26,6 @@ export default {
   menu: {...menu},
   dashboard: {...dashboard},
   login: {...login},
+  button: {...button},
+  placeholder: {...placeholder},
 } as const;

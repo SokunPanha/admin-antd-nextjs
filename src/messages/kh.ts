@@ -10,6 +10,8 @@ import validation from './kh/validation';
 import menu from './kh/menu';
 import dashboard from './kh/dashboard';
 import login from './kh/login';
+import button from './kh/button';
+import placeholder from './kh/placeholder';
 
 export default {
   common: {...common},
@@ -24,4 +26,6 @@ export default {
   menu: {...menu},
   dashboard: {...dashboard},
   login: {...login},
+  button: {...button},
+  placeholder: {...placeholder},
 } as const;

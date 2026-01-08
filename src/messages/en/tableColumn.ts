@@ -16,4 +16,6 @@ export default {
   sortOrder: 'Sort Order',
   status: 'Status',
   visible: 'Visible',
+  description: 'Description',
+  active: 'Active',
 } as const;

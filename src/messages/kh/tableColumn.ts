@@ -16,4 +16,6 @@ export default {
   sortOrder: 'លំដាប់តម្រៀប',
   status: 'ស្ថានភាព',
   visible: 'មើលឃើញ',
+  description: 'ការពិពណ៌នា',
+  active: 'សកម្ម',
 } as const;

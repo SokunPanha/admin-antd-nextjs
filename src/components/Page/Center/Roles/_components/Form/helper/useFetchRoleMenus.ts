@@ -58,9 +58,8 @@ export default function useFetchRoleMenus() {
           role_id: params.role_id
         });
 
-        // Apply parent auto-selection logic
-        const selectedIds = applyParentSelection(roleMenus.menu_ids || [], itemsMap);
-        setSelectedMenuIds(selectedIds);
+        // Set initial selected menus (these should already include parents from API)
+        setSelectedMenuIds(roleMenus.menu_ids || []);
       }
 
       setLoading(false);
@@ -75,27 +74,89 @@ export default function useFetchRoleMenus() {
     }
   };
 
-  // Helper function to apply parent auto-selection
-  const applyParentSelection = (menuIds: number[], itemsMap: Map<string, any>): number[] => {
-    const selectedSet = new Set(menuIds);
-
-    // For each selected menu, ensure parent is also selected
-    menuIds.forEach((menuId) => {
-      const item = itemsMap.get(String(menuId));
-      if (item && item.parent_id && item.parent_id !== 0) {
-        selectedSet.add(item.parent_id);
-      }
+  // Get all children IDs recursively
+  const getAllChildrenIds = (item: any): number[] => {
+    if (!item.children?.length) return [];
+    const ids: number[] = [];
+    item.children.forEach((child: any) => {
+      ids.push(Number(child.id));
+      ids.push(...getAllChildrenIds(child));
     });
-
-    return Array.from(selectedSet);
+    return ids;
   };
 
-  // Handle selection change with parent auto-selection logic
-  const handleSelectionChange = useCallback((selectedRowKeys: React.Key[], itemsMap: Map<string, any>) => {
-    const selectedIds = selectedRowKeys.map(key => Number(key));
-    const finalSelection = applyParentSelection(selectedIds, itemsMap);
-    setSelectedMenuIds(finalSelection);
-    return finalSelection;
+  // Handle selection change with custom logic
+  const handleSelectionChange = useCallback((
+    selectedRowKeys: React.Key[],
+    itemsMap: Map<string, any>,
+    prevSelectedIds: number[]
+  ) => {
+    const newKeys = selectedRowKeys.map(k => Number(k));
+    const prevKeys = prevSelectedIds.map(k => Number(k));
+
+    const prevSet = new Set(prevKeys);
+    const newSet = new Set(newKeys);
+
+    // Find what changed
+    const added = newKeys.filter(k => !prevSet.has(k))[0]; // Only one item changes at a time
+    const removed = prevKeys.filter(k => !newSet.has(k))[0];
+
+    let result = new Set<number>(prevKeys);
+
+    if (added) {
+      const item = itemsMap.get(String(added));
+      if (item) {
+        result.add(added);
+
+        // If parent selected, select all children
+        if (item.children?.length) {
+          getAllChildrenIds(item).forEach(id => result.add(id));
+        }
+
+        // If child selected, select all parents up the chain
+        let currentParentId = item.parent_id;
+        while (currentParentId && currentParentId !== 0) {
+          result.add(Number(currentParentId));
+          const parent = itemsMap.get(String(currentParentId));
+          currentParentId = parent?.parent_id;
+        }
+      }
+    }
+
+    if (removed) {
+      const item = itemsMap.get(String(removed));
+      if (item) {
+        result.delete(removed);
+
+        // If parent removed, remove all children
+        if (item.children?.length) {
+          getAllChildrenIds(item).forEach(id => result.delete(id));
+        }
+
+        // If child removed, check if parents should be removed (up the chain)
+        let currentParentId = item.parent_id;
+        while (currentParentId && currentParentId !== 0) {
+          const parent = itemsMap.get(String(currentParentId));
+          if (parent?.children) {
+            // Check if any child of this parent is still selected
+            const hasSelectedChild = parent.children.some((c: any) => result.has(Number(c.id)));
+            if (!hasSelectedChild) {
+              // No children selected, remove this parent
+              result.delete(Number(currentParentId));
+              // Continue checking up the chain
+              currentParentId = parent.parent_id;
+            } else {
+              // At least one child is selected, keep this parent and stop checking
+              break;
+            }
+          } else {
+            break;
+          }
+        }
+      }
+    }
+
+    setSelectedMenuIds(Array.from(result));
   }, []);
 
   // Get final menu IDs (exclude parents that have no selected children)

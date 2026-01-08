@@ -86,7 +86,7 @@ export const useModalForm = () => {
       form,
       modalProps: {
         centered: true, // <-- centers the modal vertically
-        destroyOnClose: true,
+        destroyOnHidden: true,
         maskClosable: false,
       }
     },
