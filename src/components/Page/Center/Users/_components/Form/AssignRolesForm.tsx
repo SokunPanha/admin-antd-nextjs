@@ -15,19 +15,7 @@ export default function AssignRolesForm() {
 
     // Fetch roles list
     const request = async (params: any) => {
-      const response = await SystemSettingRolesListApiV1({
-        ...params,
-        page: params.current || 1,
-        page_size: params.pageSize || 1000,
-        status: 'active',
-        sort: { field: 'id', direction: 'asc' },
-        id: 0,
-        name: '',
-        code: '',
-        menu_ids: [],
-        created_at_from: '',
-        created_at_to: ''
-      } as any)
+      const response = await SystemSettingRolesListApiV1({ } as any)
 
       return {
         data: response.items || [],
@@ -54,10 +42,16 @@ export default function AssignRolesForm() {
         }
       }
 
-      if (userId) {
+      // Only fetch when modal is open and userId exists
+      if (context.assignRolesForm.props.open && userId) {
         requestAssignedRole()
       }
-    }, [userId])
+
+      // Reset state when modal closes
+      if (!context.assignRolesForm.props.open) {
+        setSelectedRowKeys([])
+      }
+    }, [context.assignRolesForm.props.open, userId])
 
     // Memoize columns
     const columns = useMemo(() => [

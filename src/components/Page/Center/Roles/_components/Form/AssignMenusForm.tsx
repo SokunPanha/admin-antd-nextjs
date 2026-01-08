@@ -84,10 +84,16 @@ export default function AssignMenusForm() {
       }
     }
 
-    if (roleId) {
+    // Only fetch when modal is open and roleId exists
+    if (context.assignMenusForm.props.open && roleId) {
       fetchSelectedMenu()
     }
-  }, [roleId])
+
+    // Reset state when modal closes
+    if (!context.assignMenusForm.props.open) {
+      setSelectedRowKeys([])
+    }
+  }, [context.assignMenusForm.props.open, roleId])
 
   // Memoize columns
   const columns = useMemo(() => [
