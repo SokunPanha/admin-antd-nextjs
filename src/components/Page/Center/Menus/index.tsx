@@ -42,6 +42,11 @@ export default function MenusPage() {
       request={wrappedRequest}
       columns={columns}
       rowKey={"id"}
+      expandable={{
+        defaultExpandAllRows: false,
+        indentSize: 24,
+      }}
+      pagination={false}
       />
     </div>
   )
