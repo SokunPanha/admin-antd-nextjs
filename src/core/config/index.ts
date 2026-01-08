@@ -1,15 +1,15 @@
 const config: { [key: string]: { gateway: string; base: string } } = {
     development: {
-     gateway : "http://localhost:3000",
+     gateway : "http://localhost:3001",
      base: "/admin/v1"   
     },
     production: {
-        gateway : "",
+        gateway : "http://localhost:3001",
         base: "/admin/v1"   
     },
     test: {
-        gateway: "",
-        base: ""
+        gateway: "http://localhost:3001",
+        base: "/admin/v1"
     }
 }
 

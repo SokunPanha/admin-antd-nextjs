@@ -1,7 +1,7 @@
 # generate api from swagger from dev server
 .Panha:api
 api:
-	node ./src/core/libs/generate/api.js ./src/core/services/api /admin/  http://localhost:3000/admin/v1/api-docs/yaml
+	node ./src/core/libs/generate/api.js ./src/core/services/api /admin/  http://localhost:3001/admin/v1/api-docs/yaml
 
 
 .Panha:api_local
