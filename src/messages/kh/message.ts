@@ -39,4 +39,6 @@ export default {
   statusUpdated: 'ស្ថានភាពត្រូវបានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ',
   menusAssignedSuccess: 'ផ្ដល់ម៉ឺនុយបានជោគជ័យ',
   menusAssignedFailed: 'បរាជ័យក្នុងការផ្ដល់ម៉ឺនុយ',
+  rolesAssignedSuccess: 'ផ្ដល់តួនាទីបានជោគជ័យ',
+  rolesAssignedFailed: 'បរាជ័យក្នុងការផ្ដល់តួនាទី',
 } as const;

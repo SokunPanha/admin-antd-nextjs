@@ -18,4 +18,10 @@ export default {
   visible: 'មើលឃើញ',
   description: 'ការពិពណ៌នា',
   active: 'សកម្ម',
+  username: 'ឈ្មោះអ្នកប្រើប្រាស់',
+  email: 'អ៊ីមែល',
+  firstName: 'នាមខ្លួន',
+  lastName: 'នាមត្រកូល',
+  phoneNumber: 'លេខទូរសព្ទ',
+  lastLoginAt: 'ចូលចុងក្រោយ',
 } as const;

@@ -76,4 +76,7 @@ export default {
   visible: 'មើលឃើញ',
   menus: 'ម៉ឺនុយ',
   roleName: 'ឈ្មោះតួនាទី',
+  phoneNumber: 'លេខទូរសព្ទ',
+  more: "បន្ថែម",
+  collapse: "បិទ",
 } as const;

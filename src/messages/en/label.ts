@@ -76,4 +76,7 @@ export default {
   visible: 'Visible',
   menus: 'Menus',
   roleName: 'Role Name',
+  phoneNumber: 'Phone Number',
+  more: "More",
+  collapse: "Collapse",
 } as const;

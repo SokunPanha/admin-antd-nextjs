@@ -18,4 +18,10 @@ export default {
   visible: 'Visible',
   description: 'Description',
   active: 'Active',
+  username: 'Username',
+  email: 'Email',
+  firstName: 'First Name',
+  lastName: 'Last Name',
+  phoneNumber: 'Phone Number',
+  lastLoginAt: 'Last Login',
 } as const;

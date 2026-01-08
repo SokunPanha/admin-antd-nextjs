@@ -226,14 +226,14 @@ export const useProTable = () => {
         labelWidth: "auto" as const,
         collapsed: searchCollapsed,
         collapseRender: (collapsed: boolean, onCollapse: any) => (
-          <a
+          <span
             onClick={() => {
               setSearchCollapsed(!collapsed);
             }}
-            className="dark:text-blue-400 text-blue-700"
+            className="dark:text-blue-400 text-blue-700 cursor-pointer"
           >
-            {collapsed ? t('more') : t('collapse')}
-          </a>
+            {collapsed ? t('label.more') : t('label.collapse')}
+          </span>
         ),
         span: 6,
       },
@@ -289,14 +289,14 @@ export const useProTableForWithDrawPage = () => {
         labelWidth: "auto" as const,
         collapsed: searchCollapsed,
         collapseRender: (collapsed: boolean, onCollapse: unknown) => (
-          <a
+          <span
             onClick={() => {
               setSearchCollapsed(!collapsed);
             }}
-            className="dark:text-blue-400 text-blue-700"
+            className="dark:text-blue-400 text-blue-700 cursor-pointer"
           >
             {collapsed ? t('more') : t('collapse')}
-          </a>
+          </span>
         ),
         span: 6,
       },

@@ -40,13 +40,15 @@ export default function AssignMenusForm() {
     const columns = useMemo(() => [
       {
         title: t('label.labelEn'),
-        dataIndex: 'label_en',
+        dataIndex: 'labels',
         key: 'label_en',
+        render: (_: any, record: any) => record.labels?.en || '-'
       },
       {
         title: t('label.labelKh'),
-        dataIndex: 'label_kh',
+        dataIndex: 'labels',
         key: 'label_kh',
+        render: (_: any, record: any) => record.labels?.kh || '-'
       },
       {
         title: t('label.path'),
@@ -55,8 +57,9 @@ export default function AssignMenusForm() {
       },
       {
         title: t('label.icon'),
-        dataIndex: 'icon_name',
-        key: 'icon_name',
+        dataIndex: 'icon',
+        key: 'icon',
+        render: (_: any, record: any) => record.icon || '-'
       },
     ], [t])
 
@@ -105,10 +108,9 @@ export default function AssignMenusForm() {
         rowSelection={{
           selectedRowKeys: selectedMenuIds,
           onChange: (selectedRowKeys) => {
-            const finalSelection = handleSelectionChange(selectedRowKeys, itemsMapRef.current);
-            setSelectedMenuIds(finalSelection);
+            handleSelectionChange(selectedRowKeys, itemsMapRef.current, selectedMenuIds);
           },
-          checkStrictly: false,
+          // checkStrictly: true,
         }}
       />
     </ModalForm>

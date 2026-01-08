@@ -15,12 +15,14 @@ export const SystemSettingCenterUsersUpdateApiV1 = createApi<CenterUserUpdateReq
 export const SystemSettingCenterUsersDeleteApiV1 = createApi<CenterUserDeleteRequest,CenterUserDeleteResponse>('/admin/v1/system-setting/center-users/delete')
 export const SystemSettingCenterUsersUpdateStatusApiV1 = createApi<CenterUserUpdateStatusRequest,CenterUserUpdateStatusResponse>('/admin/v1/system-setting/center-users/update-status')
 export const SystemSettingCenterUsersAssignRolesApiV1 = createApi<CenterUserAssignRolesRequest,CenterUserAssignRolesResponse>('/admin/v1/system-setting/center-users/assign-roles')
+export const SystemSettingCenterUsersUserBindRoleListApiV1 = createApi<UserBindRoleListRequest,UserBindRoleListResponse>('/admin/v1/system-setting/center-users/user-bind-role-list')
 export const SystemSettingRolesCreateApiV1 = createApi<RoleCreateRequest,RoleCreateResponse>('/admin/v1/system-setting/roles/create')
 export const SystemSettingRolesListApiV1 = createApi<RoleListRequest,RoleListResponse>('/admin/v1/system-setting/roles/list')
 export const SystemSettingRolesUpdateApiV1 = createApi<RoleUpdateRequest,RoleUpdateResponse>('/admin/v1/system-setting/roles/update')
 export const SystemSettingRolesDeleteApiV1 = createApi<RoleDeleteRequest,RoleDeleteResponse>('/admin/v1/system-setting/roles/delete')
 export const SystemSettingRolesUpdateStatusApiV1 = createApi<RoleUpdateStatusRequest,RoleUpdateStatusResponse>('/admin/v1/system-setting/roles/update-status')
 export const SystemSettingRolesAssignMenusApiV1 = createApi<RoleAssignMenusRequest,RoleAssignMenusResponse>('/admin/v1/system-setting/roles/assign-menus')
+export const SystemSettingRolesRoleBindMenuListApiV1 = createApi<RoleBindMenuListRequest,RoleBindMenuListResponse>('/admin/v1/system-setting/roles/role-bind-menu-list')
 export const SystemSettingMenusCreateApiV1 = createApi<MenuCreateRequest,MenuCreateResponse>('/admin/v1/system-setting/menus/create')
 export const SystemSettingMenusListApiV1 = createApi<MenuListRequest,MenuListResponse>('/admin/v1/system-setting/menus/list')
 export const SystemSettingMenusUpdateApiV1 = createApi<MenuUpdateRequest,MenuUpdateResponse>('/admin/v1/system-setting/menus/update')
@@ -202,6 +204,14 @@ export type CenterUserAssignRolesResponse = {
 
 }
 
+export type UserBindRoleListRequest = {
+  user_id: number;
+}
+
+export type UserBindRoleListResponse = {
+  role_ids: number[];
+}
+
 export type RoleCreateRequest = {
   name: string;
   code: string;
@@ -277,6 +287,14 @@ export type RoleAssignMenusRequest = {
 
 export type RoleAssignMenusResponse = {
 
+}
+
+export type RoleBindMenuListRequest = {
+  role_id: number;
+}
+
+export type RoleBindMenuListResponse = {
+  menu_ids: number[];
 }
 
 export type MenuCreateRequest = {

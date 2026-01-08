@@ -59,4 +59,8 @@ export default {
   confirmEnableRole: 'Are you sure you want to enable this role?',
   confirmDisableRole: 'Are you sure you want to disable this role?',
   assignMenus: 'Assign Menus to Role',
+  confirmDeleteUser: 'Are you sure you want to delete this user?',
+  confirmEnableUser: 'Are you sure you want to enable this user?',
+  confirmDisableUser: 'Are you sure you want to disable this user?',
+  assignRoles: 'Assign Roles to User',
 } as const;
