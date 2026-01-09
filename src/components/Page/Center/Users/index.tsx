@@ -8,12 +8,13 @@ import CreateForm from "./_components/Form/CreateForm";
 import { useTranslations } from "next-intl";
 import UpdateForm from "./_components/Form/UpdateForm";
 import AssignRolesForm from "./_components/Form/AssignRolesForm";
+import UpdatePasswordForm from "./_components/Form/UpdatePasswordForm";
 import { useMemo, useCallback } from "react";
 import useUser from "./helper/useUser";
 
 export default function UsersPage() {
   const context = useUsersPageContext()
-  const {table, createForm, assignRolesForm} = context
+  const {table, createForm, assignRolesForm, updatePasswordForm} = context
   const {request} = useFetchUsers()
   const t = useTranslations()
   const { deleteUser, updateUserStatus } = useUser()
@@ -23,8 +24,13 @@ export default function UsersPage() {
     assignRolesForm.open(record);
   }, [assignRolesForm]);
 
+  // Handle update password
+  const handleUpdatePassword = useCallback((record: any) => {
+    updatePasswordForm.open(record);
+  }, [updatePasswordForm]);
+
   // Memoize columns to prevent recreation on every render
-  const columns = useMemo(() => Columns(t, context, deleteUser, updateUserStatus, handleAssignRoles), [t, context, deleteUser, updateUserStatus, handleAssignRoles]);
+  const columns = useMemo(() => Columns(t, context, deleteUser, updateUserStatus, handleAssignRoles, handleUpdatePassword), [t, context, deleteUser, updateUserStatus, handleAssignRoles, handleUpdatePassword]);
 
   // Memoize request wrapper
   const wrappedRequest = useMemo(() => tableRequestWrap(request), [request]);
@@ -39,6 +45,7 @@ export default function UsersPage() {
       <CreateForm/>
       <UpdateForm/>
       <AssignRolesForm/>
+      <UpdatePasswordForm/>
       <ProTable
       {...table.props}
       headerTitle={

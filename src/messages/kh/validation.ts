@@ -44,4 +44,6 @@ export default {
   enterProductName: 'សូមបញ្ចូលឈ្មោះផលិតផល',
   enterProductPrice: 'សូមបញ្ចូលតម្លៃផលិតផល',
   enterProductImage: 'សូមបញ្ចូល URL រូបភាពផលិតផល',
+  passwordMinLength: 'ពាក្យសម្ងាត់ត្រូវមានយ៉ាងហោចណាស់ 6 តួអក្សរ',
+  passwordMismatch: 'ពាក្យសម្ងាត់មិនត្រូវគ្នា',
 } as const;

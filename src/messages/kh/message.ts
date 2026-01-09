@@ -41,4 +41,6 @@ export default {
   menusAssignedFailed: 'បរាជ័យក្នុងការផ្ដល់ម៉ឺនុយ',
   rolesAssignedSuccess: 'ផ្ដល់តួនាទីបានជោគជ័យ',
   rolesAssignedFailed: 'បរាជ័យក្នុងការផ្ដល់តួនាទី',
+  passwordUpdatedSuccess: 'ធ្វើបច្ចុប្បន្នភាពពាក្យសម្ងាត់បានជោគជ័យ',
+  passwordUpdatedFailed: 'បរាជ័យក្នុងការធ្វើបច្ចុប្បន្នភាពពាក្យសម្ងាត់',
 } as const;

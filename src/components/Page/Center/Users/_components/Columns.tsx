@@ -3,13 +3,15 @@ import { Tag, Switch, Button } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { AiOutlineUserSwitch } from "react-icons/ai";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 export default function Columns(
   t: (key: string) => string,
   context: ReturnType<typeof import("../helper/hooks").useUsersPageContext>,
   deleteUser: (record: { id: number }) => void,
   updateUserStatus: (params: { id: number; status: string }) => void,
-  openAssignRoles: (record: any) => void
+  openAssignRoles: (record: any) => void,
+  openUpdatePassword: (record: any) => void
 ) {
 
   return defineColumns([
@@ -84,7 +86,7 @@ export default function Columns(
     {
       title: t("tableColumn.action"),
       search: false,
-      width: 180,
+      width: 220,
       render: (record: any) => {
         return (
           <div className="flex gap-2">
@@ -96,6 +98,13 @@ export default function Columns(
             >
               {t('button.assignRoles')}
             </Button>
+            <RiLockPasswordLine
+              color="blue"
+              onClick={() => openUpdatePassword(record)}
+              size={20}
+              className="cursor-pointer"
+              title={t('button.updatePassword')}
+            />
             <BiEdit
               color="orange"
               onClick={() => {

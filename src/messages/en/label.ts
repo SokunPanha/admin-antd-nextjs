@@ -79,4 +79,6 @@ export default {
   phoneNumber: 'Phone Number',
   more: "More",
   collapse: "Collapse",
+  newPassword: 'New Password',
+  confirmPassword: 'Confirm Password',
 } as const;

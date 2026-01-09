@@ -16,6 +16,7 @@ export const SystemSettingCenterUsersDeleteApiV1 = createApi<CenterUserDeleteReq
 export const SystemSettingCenterUsersUpdateStatusApiV1 = createApi<CenterUserUpdateStatusRequest,CenterUserUpdateStatusResponse>('/admin/v1/system-setting/center-users/update-status')
 export const SystemSettingCenterUsersAssignRolesApiV1 = createApi<CenterUserAssignRolesRequest,CenterUserAssignRolesResponse>('/admin/v1/system-setting/center-users/assign-roles')
 export const SystemSettingCenterUsersUserBindRoleListApiV1 = createApi<UserBindRoleListRequest,UserBindRoleListResponse>('/admin/v1/system-setting/center-users/user-bind-role-list')
+export const SystemSettingCenterUsersUpdatePasswordApiV1 = createApi<CenterUserUpdatePasswordRequest,CenterUserUpdatePasswordResponse>('/admin/v1/system-setting/center-users/update-password')
 export const SystemSettingRolesCreateApiV1 = createApi<RoleCreateRequest,RoleCreateResponse>('/admin/v1/system-setting/roles/create')
 export const SystemSettingRolesListApiV1 = createApi<RoleListRequest,RoleListResponse>('/admin/v1/system-setting/roles/list')
 export const SystemSettingRolesUpdateApiV1 = createApi<RoleUpdateRequest,RoleUpdateResponse>('/admin/v1/system-setting/roles/update')
@@ -210,6 +211,15 @@ export type UserBindRoleListRequest = {
 
 export type UserBindRoleListResponse = {
   role_ids: number[];
+}
+
+export type CenterUserUpdatePasswordRequest = {
+  id: number;
+  new_password: string;
+}
+
+export type CenterUserUpdatePasswordResponse = {
+
 }
 
 export type RoleCreateRequest = {

@@ -8,4 +8,6 @@ export default {
   enterFirstName: 'បញ្ចូលនាមខ្លួន',
   enterLastName: 'បញ្ចូលនាមត្រកូល',
   enterPhoneNumber: 'បញ្ចូលលេខទូរសព្ទ',
+  enterNewPassword: 'បញ្ចូលពាក្យសម្ងាត់ថ្មី',
+  confirmPassword: 'បញ្ជាក់ពាក្យសម្ងាត់ថ្មី',
 } as const;

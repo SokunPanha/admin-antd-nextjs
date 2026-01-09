@@ -1,5 +1,5 @@
 import { App } from 'antd';
-import { SystemSettingCenterUsersCreateApiV1, SystemSettingCenterUsersUpdateApiV1, SystemSettingCenterUsersDeleteApiV1, SystemSettingCenterUsersUpdateStatusApiV1, SystemSettingCenterUsersAssignRolesApiV1, CenterUserCreateRequest, CenterUserUpdateRequest, CenterUserDeleteRequest, CenterUserUpdateStatusRequest, CenterUserAssignRolesRequest } from '@/core/services/api';
+import { SystemSettingCenterUsersCreateApiV1, SystemSettingCenterUsersUpdateApiV1, SystemSettingCenterUsersDeleteApiV1, SystemSettingCenterUsersUpdateStatusApiV1, SystemSettingCenterUsersAssignRolesApiV1, SystemSettingCenterUsersUpdatePasswordApiV1, CenterUserCreateRequest, CenterUserUpdateRequest, CenterUserDeleteRequest, CenterUserUpdateStatusRequest, CenterUserAssignRolesRequest, CenterUserUpdatePasswordRequest } from '@/core/services/api';
 import { useTranslations } from 'next-intl';
 import { useUsersPageContext } from './hooks';
 import { filterRequestParam } from '@/core/libs/base';
@@ -79,11 +79,22 @@ export default function useUser() {
         }
     }, [message, t, context.table]);
 
+    const updatePassword = useCallback(async (params: CenterUserUpdatePasswordRequest) => {
+        try {
+            await SystemSettingCenterUsersUpdatePasswordApiV1(filterRequestParam(params));
+            message.success(t('message.passwordUpdatedSuccess'));
+            context.table.reload();
+        } catch (error) {
+            message.error(t('message.passwordUpdatedFailed'));
+        }
+    }, [message, t, context.table]);
+
     return {
         createUser,
         updateUser,
         deleteUser,
         updateUserStatus,
         assignRoles,
+        updatePassword,
     };
 }

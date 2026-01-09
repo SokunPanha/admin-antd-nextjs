@@ -8,4 +8,6 @@ export default {
   enterFirstName: 'Enter first name',
   enterLastName: 'Enter last name',
   enterPhoneNumber: 'Enter phone number',
+  enterNewPassword: 'Enter new password',
+  confirmPassword: 'Confirm new password',
 } as const;

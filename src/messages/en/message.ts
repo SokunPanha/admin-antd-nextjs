@@ -41,4 +41,6 @@ export default {
   menusAssignedFailed: 'Failed to assign menus',
   rolesAssignedSuccess: 'Roles assigned successfully',
   rolesAssignedFailed: 'Failed to assign roles',
+  passwordUpdatedSuccess: 'Password updated successfully',
+  passwordUpdatedFailed: 'Failed to update password',
 } as const;

@@ -79,4 +79,6 @@ export default {
   phoneNumber: 'លេខទូរសព្ទ',
   more: "បន្ថែម",
   collapse: "បិទ",
+  newPassword: 'ពាក្យសម្ងាត់ថ្មី',
+  confirmPassword: 'បញ្ជាក់ពាក្យសម្ងាត់',
 } as const;

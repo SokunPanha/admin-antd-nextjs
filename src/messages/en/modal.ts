@@ -63,4 +63,5 @@ export default {
   confirmEnableUser: 'Are you sure you want to enable this user?',
   confirmDisableUser: 'Are you sure you want to disable this user?',
   assignRoles: 'Assign Roles to User',
+  updatePassword: 'Update User Password',
 } as const;

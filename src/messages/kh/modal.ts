@@ -63,4 +63,5 @@ export default {
   confirmEnableUser: 'តើអ្នកប្រាកដថាចង់បើកអ្នកប្រើប្រាស់នេះទេ?',
   confirmDisableUser: 'តើអ្នកប្រាកដថាចង់បិទអ្នកប្រើប្រាស់នេះទេ?',
   assignRoles: 'កំណត់តួនាទីទៅអ្នកប្រើប្រាស់',
+  updatePassword: 'ធ្វើបច្ចុប្បន្នភាពពាក្យសម្ងាត់អ្នកប្រើប្រាស់',
 } as const;

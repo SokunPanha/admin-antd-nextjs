@@ -44,4 +44,6 @@ export default {
   enterProductName: 'Please enter product name',
   enterProductPrice: 'Please enter product price',
   enterProductImage: 'Please enter product image URL',
+  passwordMinLength: 'Password must be at least 6 characters',
+  passwordMismatch: 'Passwords do not match',
 } as const;

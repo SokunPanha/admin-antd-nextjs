@@ -5,6 +5,7 @@ export const [UsersPageProvider, useUsersPageContext] = makeContext(()=>{
         table: useProTable(),
         createForm: useModalForm(),
         updateForm: useModalForm(),
-        assignRolesForm: useModalForm()
+        assignRolesForm: useModalForm(),
+        updatePasswordForm: useModalForm()
     }
 })
