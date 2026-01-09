@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import UpdateForm from "./_components/Form/UpdateForm";
 import { useMemo, useCallback } from "react";
 import useMenu from "./helper/useMenu";
+import { useProTableCache } from "@/core/libs/base";
 
 export default function MenusPage() {
   const context = useMenusPageContext()
@@ -16,12 +17,13 @@ export default function MenusPage() {
   const {request} = useFetchMenus()
   const t = useTranslations()
   const { deleteMenu, updateMenuStatus } = useMenu()
+  const { wrapRequest } = useProTableCache('menus-table')
 
   // Memoize columns to prevent recreation on every render
   const columns = useMemo(() => Columns(t, context, deleteMenu, updateMenuStatus), [t, context, deleteMenu, updateMenuStatus]);
 
-  // Memoize request wrapper
-  const wrappedRequest = useMemo(() => tableRequestWrap(request), [request]);
+  // Memoize request wrapper with caching
+  const wrappedRequest = useMemo(() => wrapRequest(tableRequestWrap(request)), [request, wrapRequest]);
 
   // Memoize header title callback
   const handleAddClick = useCallback(() => {

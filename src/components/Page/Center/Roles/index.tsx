@@ -10,6 +10,7 @@ import UpdateForm from "./_components/Form/UpdateForm";
 import AssignMenusForm from "./_components/Form/AssignMenusForm";
 import { useMemo, useCallback } from "react";
 import useRole from "./helper/useRole";
+import { useProTableCache } from "@/core/libs/base";
 
 export default function RolesPage() {
   const context = useRolesPageContext()
@@ -17,6 +18,7 @@ export default function RolesPage() {
   const {request} = useFetchRoles()
   const t = useTranslations()
   const { deleteRole, updateRoleStatus } = useRole()
+  const { wrapRequest } = useProTableCache('roles-table')
 
   // Handle assign menus
   const handleAssignMenus = useCallback((record: any) => {
@@ -29,8 +31,8 @@ export default function RolesPage() {
   // Memoize columns to prevent recreation on every render
   const columns = useMemo(() => Columns(t, context, deleteRole, updateRoleStatus, handleAssignMenus), [t, context, deleteRole, updateRoleStatus, handleAssignMenus]);
 
-  // Memoize request wrapper
-  const wrappedRequest = useMemo(() => tableRequestWrap(request), [request]);
+  // Memoize request wrapper with caching
+  const wrappedRequest = useMemo(() => wrapRequest(tableRequestWrap(request)), [request, wrapRequest]);
 
   // Memoize header title callback
   const handleAddClick = useCallback(() => {

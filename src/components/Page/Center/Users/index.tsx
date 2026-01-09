@@ -11,6 +11,7 @@ import AssignRolesForm from "./_components/Form/AssignRolesForm";
 import UpdatePasswordForm from "./_components/Form/UpdatePasswordForm";
 import { useMemo, useCallback } from "react";
 import useUser from "./helper/useUser";
+import { useProTableCache } from "@/core/libs/base";
 
 export default function UsersPage() {
   const context = useUsersPageContext()
@@ -18,6 +19,7 @@ export default function UsersPage() {
   const {request} = useFetchUsers()
   const t = useTranslations()
   const { deleteUser, updateUserStatus } = useUser()
+  const { wrapRequest } = useProTableCache('users-table')
 
   // Handle assign roles
   const handleAssignRoles = useCallback((record: any) => {
@@ -32,8 +34,8 @@ export default function UsersPage() {
   // Memoize columns to prevent recreation on every render
   const columns = useMemo(() => Columns(t, context, deleteUser, updateUserStatus, handleAssignRoles, handleUpdatePassword), [t, context, deleteUser, updateUserStatus, handleAssignRoles, handleUpdatePassword]);
 
-  // Memoize request wrapper
-  const wrappedRequest = useMemo(() => tableRequestWrap(request), [request]);
+  // Memoize request wrapper with caching
+  const wrappedRequest = useMemo(() => wrapRequest(tableRequestWrap(request)), [request, wrapRequest]);
 
   // Memoize header title callback
   const handleAddClick = useCallback(() => {
@@ -47,6 +49,7 @@ export default function UsersPage() {
       <AssignRolesForm/>
       <UpdatePasswordForm/>
       <ProTable
+      
       {...table.props}
       headerTitle={
         <div>
