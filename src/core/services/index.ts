@@ -156,7 +156,6 @@ export const tableRequestWrap = <T = any>(
   async (
     params: { pageSize?: number; current?: number; keyword?: string },
     sort: Record<string, SortOrder>,
-    filter: Record<string, (string | number)[] | null>
   ): Promise<RequestData<T>> => {
     return await sync(
       async () => {

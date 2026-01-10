@@ -65,6 +65,7 @@ export default function PageLayout({ children }: PageLayoutProps) {
         avatarProps={avatarProps}
         actionsRender={actionsRender}
         route={menuData}
+
       >
         <div key={pathname} className="animate-fade-in">
           {children}

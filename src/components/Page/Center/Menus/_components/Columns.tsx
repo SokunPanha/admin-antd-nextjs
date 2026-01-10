@@ -19,18 +19,11 @@ export default function Columns(
     },
     {
       title: t("tableColumn.code"),
-      dataIndex: "filters.code",
+      dataIndex: "code",
       search: true,
       copyable: true,
     },
-    {
-      title: t("tableColumn.label"),
-      dataIndex: "labels",
-      search: true,
-      render: (_: any, record: any) => {
-        return record.labels?.en ;
-      },
-    },
+  
     {
       title: t("tableColumn.icon"),
       dataIndex: "icon",

@@ -89,6 +89,7 @@ export function useMenuData() {
 
   // Transform menu data when locale changes
   useEffect(() => {
+    console.log("🚀 ~ useMenuData ~ rawMenuItems:", rawMenuItems)
     if (rawMenuItems) {
       const transformedData: MenuRouteData = {
         path: '/admin',
@@ -122,7 +123,7 @@ function transformMenuItems(items: MenuItemData[], locale: string): TransformedM
     const transformed: TransformedMenuItem = {
       path: (item.route_path as any) || `/admin/${item.code}`,
       name: extractLabel(item.labels, locale),
-      icon: getIconComponent(item.icon as string),
+      icon: item.icon,
     };
 
     // Recursively transform children if they exist

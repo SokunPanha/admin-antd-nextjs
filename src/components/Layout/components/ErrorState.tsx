@@ -18,7 +18,7 @@ export default function ErrorState({ error }: ErrorStateProps) {
       }}
     >
       <Alert
-        message="Failed to Load Menu"
+        title="Failed to Load Menu"
         description={error || "Could not load menu data from API"}
         type="error"
         showIcon

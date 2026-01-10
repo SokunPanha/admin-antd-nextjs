@@ -4,12 +4,12 @@ import { useMemo, useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Dropdown, Input, Space, Button } from "antd";
-import { QuestionCircleOutlined, BellOutlined, SearchOutlined } from "@ant-design/icons";
+import { QuestionCircleOutlined, BellOutlined, SearchOutlined, UserOutlined } from "@ant-design/icons";
 import { getUserMenuItems } from "../constants";
 import { AuthProfileApiV1 } from "@/core/services/api";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
-
+import { NamedIcon } from "../components/NamedIcon";
 export function useLayoutConfig(onLogout: () => void) {
   const pathname = usePathname();
   const [userProfile, setUserProfile] = useState<any>(null);
@@ -40,9 +40,12 @@ export function useLayoutConfig(onLogout: () => void) {
   const location = useMemo(() => ({ pathname }), [pathname]);
 
   // Menu item renderer with link
-  const menuItemRender = useCallback((item: any, dom: React.ReactNode) => (
-    <Link href={item.path || "/admin"}>{dom}</Link>
-  ), []);
+  const menuItemRender = useCallback((item: any, dom: React.ReactNode) => {
+    console.log("🚀 ~ useLayoutConfig ~ item:", item)
+    
+    return (
+    <Link className="flex items-center gap-2" href={item.path || "/admin"}> <NamedIcon name={item.icon} /> {item.name}</Link>
+  )}, []);
 
   // Avatar configuration
   const avatarProps = useMemo(() => ({

@@ -2,6 +2,7 @@ import { MenuListRequest, SystemSettingMenusListApiV1 } from "@/core/services/ap
 
 export default function useFetchMenus() {
   const request = async (params: MenuListRequest) => {
+    console.log("🚀 ~ request ~ params:", params)
     const response = await SystemSettingMenusListApiV1({
      ...params
     });
