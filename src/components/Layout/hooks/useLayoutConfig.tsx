@@ -1,16 +1,32 @@
 "use client";
 
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Dropdown, Input, Space, Button } from "antd";
 import { QuestionCircleOutlined, BellOutlined, SearchOutlined } from "@ant-design/icons";
 import { getUserMenuItems } from "../constants";
+import { AuthProfileApiV1 } from "@/core/services/api";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 export function useLayoutConfig(onLogout: () => void) {
   const pathname = usePathname();
+  const [userProfile, setUserProfile] = useState<any>(null);
+
+  // Fetch user profile
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const profile = await AuthProfileApiV1();
+        setUserProfile(profile);
+      } catch (error) {
+        console.error('Failed to fetch user profile:', error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   // User menu items
   const userMenuItems = useMemo(() => getUserMenuItems(onLogout), [onLogout]);
@@ -32,13 +48,13 @@ export function useLayoutConfig(onLogout: () => void) {
   const avatarProps = useMemo(() => ({
     src: "https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg",
     size: "small" as const,
-    title: "Admin User",
+    title: userProfile?.username || "Admin User",
     render: (_props: any, dom: React.ReactNode) => (
       <Dropdown menu={{ items: userMenuItems }}>
         {dom}
       </Dropdown>
     ),
-  }), [userMenuItems]);
+  }), [userMenuItems, userProfile]);
 
   // Header actions
   const actionsRender = useCallback((props: any) => {
