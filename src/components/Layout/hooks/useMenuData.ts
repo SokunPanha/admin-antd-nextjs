@@ -4,6 +4,7 @@ import { AuthMenusApiV1, MenuItemData } from '@/core/services/api';
 import { ErrorHandler } from '@/core/services/error-handler';
 import * as Icons from '@ant-design/icons';
 import { useLocale } from '@/contexts/LocaleContext';
+import { NamedIcon } from '../components/NamedIcon';
 
 export interface TransformedMenuItem {
   path: string;
@@ -15,6 +16,7 @@ export interface TransformedMenuItem {
 export interface MenuRouteData {
   path: string;
   routes: TransformedMenuItem[];
+  icon?: React.ReactNode;
 }
 
 export function useMenuData() {
@@ -102,28 +104,13 @@ export function useMenuData() {
   return { menuData, loading, error };
 }
 
-// Map icon string names to actual icon components
-function getIconComponent(iconName?: string): React.ReactNode {
-  if (!iconName) return undefined;
-
-  // @ts-ignore - dynamically access icon from Icons object
-  const IconComponent = Icons[iconName as keyof typeof Icons];
-
-  if (IconComponent && typeof IconComponent === 'function') {
-    return createElement(IconComponent as any);
-  }
-
-  console.warn(`Icon "${iconName}" not found in @ant-design/icons`);
-  return undefined;
-}
-
 // Transform API menu items to ProLayout format
 function transformMenuItems(items: MenuItemData[], locale: string): TransformedMenuItem[] {
   return items.map(item => {
     const transformed: TransformedMenuItem = {
-      path: (item.route_path as any) || `/admin/${item.code}`,
+      path: (item.route_path as any) || `/admin/${item.id}`,
       name: extractLabel(item.labels, locale),
-      icon: item.icon,
+      icon: item.icon ? createElement(NamedIcon, { name: item.icon as string }) : undefined,
     };
 
     // Recursively transform children if they exist

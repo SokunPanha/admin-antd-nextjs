@@ -9,7 +9,6 @@ import { getUserMenuItems } from "../constants";
 import { AuthProfileApiV1 } from "@/core/services/api";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
-import { NamedIcon } from "../components/NamedIcon";
 export function useLayoutConfig(onLogout: () => void) {
   const pathname = usePathname();
   const [userProfile, setUserProfile] = useState<any>(null);
@@ -38,14 +37,21 @@ export function useLayoutConfig(onLogout: () => void) {
 
   // Current location
   const location = useMemo(() => ({ pathname }), [pathname]);
-
   // Menu item renderer with link
   const menuItemRender = useCallback((item: any, dom: React.ReactNode) => {
-    console.log("🚀 ~ useLayoutConfig ~ item:", item)
-    
-    return (
-    <Link className="flex items-center gap-2" href={item.path || "/admin"}> <NamedIcon name={item.icon} /> {item.name}</Link>
-  )}, []);
+    // For items with children (parent items), ProLayout handles the icon automatically
+    // For child items without children, we need to manually include the icon
+    if (!item.children || item.children.length === 0) {
+      return (
+        <Link href={item.path || "/admin"} className="flex items-center gap-2">
+          {item.icon}
+          <span>{item.name}</span>
+        </Link>
+      );
+    }
+    // For parent items, just wrap the dom which includes the icon
+    return <Link href={item.path || "/admin"}>{dom}</Link>;
+  }, []);
 
   // Avatar configuration
   const avatarProps = useMemo(() => ({
