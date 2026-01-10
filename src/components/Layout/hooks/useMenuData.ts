@@ -25,16 +25,9 @@ export function useMenuData() {
   useEffect(() => {
     const fetchMenus = async () => {
       try {
-        console.log('🔄 Starting to fetch menus from API...');
         setLoading(true);
 
         const response = await AuthMenusApiV1();
-
-        console.log('📦 Raw API Response:', response);
-        console.log('📦 Response Type:', typeof response);
-        console.log('📦 Response is Array?:', Array.isArray(response));
-        console.log('📦 Response Keys:', response ? Object.keys(response) : 'null');
-        console.log('📦 Response stringified:', JSON.stringify(response, null, 2));
 
         if (!response) {
           throw new Error('No response from API');
@@ -45,17 +38,14 @@ export function useMenuData() {
 
         // Check if response.menus exists (expected structure)
         if (response.menus && Array.isArray(response.menus)) {
-          console.log('✓ Found menus in response.menus');
           menuItems = response.menus;
         }
         // Check if response itself is an array
         else if (Array.isArray(response)) {
-          console.log('✓ Response is directly an array of menus');
           menuItems = response as any;
         }
         // Check if there's a data property
         else if ((response as any).data && Array.isArray((response as any).data)) {
-          console.log('✓ Found menus in response.data');
           menuItems = (response as any).data;
         }
         else {
@@ -63,9 +53,6 @@ export function useMenuData() {
           console.warn('⚠️ Available properties:', Object.keys(response));
           throw new Error('Invalid menu data structure - no menus array found');
         }
-
-        console.log('📋 Menu Items to transform:', menuItems);
-        console.log('📋 Number of items:', menuItems.length);
 
         if (menuItems.length === 0) {
           console.warn('⚠️ No menu items found in response');
@@ -76,9 +63,6 @@ export function useMenuData() {
           path: '/admin',
           routes: transformMenuItems(menuItems)
         };
-
-        console.log('✅ Transformed Menu Data:', transformedData);
-        console.log('✅ Number of routes:', transformedData.routes.length);
 
         setMenuData(transformedData);
         setError(null);
@@ -98,7 +82,6 @@ export function useMenuData() {
         setError(err?.message || 'Failed to load menu data');
       } finally {
         setLoading(false);
-        console.log('🏁 Menu fetch complete');
       }
     };
 
