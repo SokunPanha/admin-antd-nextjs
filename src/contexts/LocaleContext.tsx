@@ -18,11 +18,18 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     // Get locale from localStorage on mount
     const savedLocale = localStorage.getItem("locale") || "en";
     setLocaleState(savedLocale);
+
+    // Set initial locale cookie
+    document.cookie = `locale=${savedLocale}; path=/; max-age=31536000`; // 1 year
   }, []);
 
   const setLocale = useCallback((newLocale: string) => {
     setLocaleState(newLocale);
     localStorage.setItem("locale", newLocale);
+
+    // Set locale cookie for API requests
+    document.cookie = `locale=${newLocale}; path=/; max-age=31536000`; // 1 year
+
     // Increment version to trigger re-renders in components that depend on it
     setLocaleVersion((v) => v + 1);
   }, []);

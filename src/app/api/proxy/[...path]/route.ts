@@ -9,6 +9,9 @@ export async function POST(request: NextRequest) {
         const access_token = cookieStore.get('access_token')?.value
         const refresh_token = cookieStore.get('refresh_token')?.value
 
+        // Get locale from cookie or default to 'en'
+        const locale = cookieStore.get('locale')?.value || 'en'
+
         // Safely parse JSON body, handle empty body
         let body = null
         const text = await request.text()
@@ -25,6 +28,7 @@ export async function POST(request: NextRequest) {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`,
+                'Accept-Language': locale, // Forward language preference
             },
             body: body ? JSON.stringify(body) : undefined
         })
@@ -51,6 +55,7 @@ export async function POST(request: NextRequest) {
                         headers: {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${newAccessToken}`,
+                            'Accept-Language': locale, // Forward language preference
                         },
                         body: body ? JSON.stringify(body) : undefined
                     })
