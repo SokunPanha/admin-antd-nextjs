@@ -3,6 +3,7 @@ import { App } from 'antd';
 import { AuthMenusApiV1, MenuItemData } from '@/core/services/api';
 import { ErrorHandler } from '@/core/services/error-handler';
 import * as Icons from '@ant-design/icons';
+import { useLocale } from '@/contexts/LocaleContext';
 
 export interface TransformedMenuItem {
   path: string;
@@ -18,10 +19,13 @@ export interface MenuRouteData {
 
 export function useMenuData() {
   const { message: messageApi, notification: notificationApi } = App.useApp();
+  const [rawMenuItems, setRawMenuItems] = useState<MenuItemData[] | null>(null);
   const [menuData, setMenuData] = useState<MenuRouteData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { locale } = useLocale();
 
+  // Fetch menu data from API (only once)
   useEffect(() => {
     const fetchMenus = async () => {
       try {
@@ -58,13 +62,8 @@ export function useMenuData() {
           console.warn('⚠️ No menu items found in response');
         }
 
-        // Transform API response to ProLayout format
-        const transformedData: MenuRouteData = {
-          path: '/admin',
-          routes: transformMenuItems(menuItems)
-        };
-
-        setMenuData(transformedData);
+        // Store raw menu items
+        setRawMenuItems(menuItems);
         setError(null);
       } catch (err: any) {
         console.error('❌ Error fetching menus:', err);
@@ -88,6 +87,17 @@ export function useMenuData() {
     fetchMenus();
   }, [messageApi, notificationApi]);
 
+  // Transform menu data when locale changes
+  useEffect(() => {
+    if (rawMenuItems) {
+      const transformedData: MenuRouteData = {
+        path: '/admin',
+        routes: transformMenuItems(rawMenuItems, locale)
+      };
+      setMenuData(transformedData);
+    }
+  }, [rawMenuItems, locale]);
+
   return { menuData, loading, error };
 }
 
@@ -107,17 +117,17 @@ function getIconComponent(iconName?: string): React.ReactNode {
 }
 
 // Transform API menu items to ProLayout format
-function transformMenuItems(items: MenuItemData[]): TransformedMenuItem[] {
+function transformMenuItems(items: MenuItemData[], locale: string): TransformedMenuItem[] {
   return items.map(item => {
     const transformed: TransformedMenuItem = {
       path: (item.route_path as any) || `/admin/${item.code}`,
-      name: extractLabel(item.labels),
+      name: extractLabel(item.labels, locale),
       icon: getIconComponent(item.icon as string),
     };
 
     // Recursively transform children if they exist
     if (item.children && Array.isArray(item.children) && item.children.length > 0) {
-      transformed.children = transformMenuItems(item.children as MenuItemData[]);
+      transformed.children = transformMenuItems(item.children as MenuItemData[], locale);
     }
 
     return transformed;
@@ -125,11 +135,11 @@ function transformMenuItems(items: MenuItemData[]): TransformedMenuItem[] {
 }
 
 // Extract label from multi-language object
-function extractLabel(labels: any): string {
+function extractLabel(labels: any, locale: string): string {
   if (!labels || typeof labels !== 'object') {
     return 'Unknown';
   }
 
-  // Try to get English label first, then fallback to other languages
-  return labels.en || labels.zh || labels.km || Object.values(labels)[0] || 'Unknown';
+  // Return the label for the current locale, fallback to 'en' or first available
+  return labels[locale] || labels['en'] || labels[Object.keys(labels)[0]] || 'Unknown';
 }
