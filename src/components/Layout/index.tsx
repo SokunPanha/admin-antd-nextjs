@@ -2,6 +2,7 @@
 
 import { ProLayout } from "@ant-design/pro-components";
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { useMenuData } from "./hooks/useMenuData";
 import { useLogout } from "./hooks/useLogout";
 import { useLayoutConfig } from "./hooks/useLayoutConfig";
@@ -13,6 +14,8 @@ interface PageLayoutProps {
 }
 
 export default function PageLayout({ children }: PageLayoutProps) {
+  const pathname = usePathname();
+
   // Fetch dynamic menu data from API
   const { menuData, loading: menuLoading, error: menuError } = useMenuData();
 
@@ -47,7 +50,7 @@ export default function PageLayout({ children }: PageLayoutProps) {
   }
 
   return (
-    <main style={{ height: "100vh" }}>
+    <main  style={{ height: "100vh" }}>
       <ProLayout
         headerTitleRender={headerTitleRender}
         layout="mix"
@@ -63,7 +66,9 @@ export default function PageLayout({ children }: PageLayoutProps) {
         actionsRender={actionsRender}
         route={menuData}
       >
-        {children}
+        <div key={pathname} className="animate-fade-in">
+          {children}
+        </div>
       </ProLayout>
     </main>
   );
