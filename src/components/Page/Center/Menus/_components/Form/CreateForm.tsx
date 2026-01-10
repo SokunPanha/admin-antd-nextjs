@@ -17,13 +17,6 @@ export default function CreateForm() {
       onFinish={formSubmitWrap(createMenu)}
     >
       <ProFormText
-        name="code"
-        label={t('label.code')}
-        rules={[{ required: true, message: t('validation.required') }]}
-        placeholder="e.g., dashboard, products, users"
-      />
-
-      <ProFormText
         name={["labels", 'en']}
         label={t('label.labelEn')}
         rules={[{ required: true, message: t('validation.required') }]}

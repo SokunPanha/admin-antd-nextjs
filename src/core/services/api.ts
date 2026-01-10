@@ -99,7 +99,6 @@ export type MultiLanguageText = {
 export type MenuItemData = {
   id: number;
   parent_id: number;
-  code: string;
   labels: MultiLanguageText;
   icon: string;
   route_path: string;
@@ -309,7 +308,6 @@ export type RoleBindMenuListResponse = {
 
 export type MenuCreateRequest = {
   parent_id: number;
-  code: string;
   // Multi-language labels
   labels: MultiLanguageText;
   icon: string;
@@ -330,7 +328,6 @@ export type MenuListRequest = {
   id: number;
   // null for root menus
   parent_id: number;
-  code: string;
   status: string;
   is_visible: boolean;
   route_path: string;
@@ -341,7 +338,6 @@ export type MenuListRequest = {
 export type MenuItem = {
   id: number;
   parent_id: number;
-  code: string;
   labels: MultiLanguageText;
   icon: string;
   route_path: string;
@@ -359,7 +355,6 @@ export type MenuListResponse = {
 
 export type MenuUpdateRequest = {
   parent_id: number;
-  code: string;
   // Multi-language labels
   labels: MultiLanguageText;
   icon: string;

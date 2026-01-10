@@ -18,13 +18,6 @@ export default function Columns(
       width: 80,
     },
     {
-      title: t("tableColumn.code"),
-      dataIndex: "code",
-      search: true,
-      copyable: true,
-    },
-  
-    {
       title: t("tableColumn.icon"),
       dataIndex: "icon",
       search: false,
