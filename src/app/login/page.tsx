@@ -12,7 +12,7 @@ import {
   ProFormCheckbox,
   ProFormText,
 } from "@ant-design/pro-components";
-import { message, Tabs } from "antd";
+import { message, Tabs, App } from "antd";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { NextIntlClientProvider, useTranslations } from "next-intl";
@@ -28,6 +28,7 @@ function LoginContent() {
   const router = useRouter();
   const t = useTranslations("login");
   const { theme } = useTheme();
+  const { notification } = App.useApp();
 
   const handleSubmit = async (values: any) => {
     try {
@@ -41,18 +42,35 @@ function LoginContent() {
           password: values.password,
         }),
       });
+      console.log("🚀 ~ handleSubmit ~ response:", response)
 
       const data = await response.json();
+      console.log("🚀 ~ handleSubmit ~ data:", data)
 
-      if (data) {
-        console.log('success')
-        // message.success(t("loginSuccess"));
+      // Check if response is successful
+      if (response.ok) {
+        console.log('login success');
+        notification.success({
+          title: t("loginSuccess"),
+          description: t("loginSuccess"),
+          duration: 4,
+        } as any);
         router.push("/admin");
       } else {
-        message.error(data.message || t("loginFailed"));
+        // Show error notification with details from backend
+        notification.error({
+          title: t("loginFailed"),
+          description: data.error || t("loginError"),
+          duration: 4,
+        } as any);
       }
-    } catch (error) {
-      message.error(t("loginError"));
+    } catch (error: any) {
+      // Network or other errors
+      notification.error({
+        title: t("loginError"),
+        description: error?.message || "An unexpected error occurred",
+        duration: 4,
+      } as any);
     }
   };
 
