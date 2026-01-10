@@ -1,4 +1,5 @@
 import getEnvironment from "@/core/config";
+import { notification } from "antd";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest){
@@ -12,11 +13,11 @@ export async function POST(request: NextRequest){
             },
             body: JSON.stringify(body)
         })
-        console.log("🚀 ~ POST ~ response:", response)
-
+        console.log("🚀 ~ POST ~ response:", response.status)
         // Check if response is ok
         if (!response.ok) {
             const errorData = await response.json()
+            console.log("🚀 ~ POST ~ errorData:", errorData)
             return NextResponse.json(
                 { error: errorData.message || 'Login failed' },
                 { status: response.status }
@@ -24,13 +25,11 @@ export async function POST(request: NextRequest){
         }
 
         const responseJson = await response.json()
-        console.log('Login API Response:', responseJson)
 
         // Handle different response structures
         const data = responseJson.data || responseJson
 
         if (!data || !data.access_token) {
-            console.error('Invalid response structure:', responseJson)
             return NextResponse.json(
                 { error: 'Invalid response from authentication server' },
                 { status: 500 }
