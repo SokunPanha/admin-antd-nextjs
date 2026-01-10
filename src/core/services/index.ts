@@ -1,9 +1,8 @@
 import { message, notification } from "antd";
-// import { getEnvironment } from "../config";
 import type { RequestData } from "@ant-design/pro-components";
 import type { SortOrder } from "antd/es/table/interface";
 import getEnvironment from "../config";
-// import { getCurrentUser, clearCurrentUser, getCurrentRouter } from "../components/center";
+import { ErrorHandler } from "./error-handler";
 
 const failStatusMap: { [key: number]: string } = {
   504: "网关超时",
@@ -11,13 +10,11 @@ const failStatusMap: { [key: number]: string } = {
 };
 
 export class NetworkError extends Error {
-  code: string;
   message: string;
   status: number;
 
-  constructor(code: string, msg: string, status: number) {
+  constructor(msg: string, status: number) {
     super(msg);
-    this.code = code;
     this.message = msg;
     this.status = status;
   }
@@ -46,45 +43,14 @@ export const createApi =
           errorData = await response.json();
         } catch (e) {
           // If JSON parsing fails, use default error message
-          const errorMsg = failStatusMap[response.status] || `请求失败 (${response.status})`;
-          throw new NetworkError(
-            String(response.status),
-            errorMsg,
-            response.status
-          );
+          const errorMsg = failStatusMap[response.status] || `Request failed (${response.status})`;
+          throw new NetworkError(errorMsg, response.status);
         }
 
-        // Handle validation errors (400 Bad Request)
-        if (response.status === 400 && errorData.message) {
-          const validationMessages = Array.isArray(errorData.message)
-            ? errorData.message
-            : [errorData.message];
+        // Extract message from backend response
+        const message = errorData.message || failStatusMap[response.status] || `Request failed (${response.status})`;
 
-          // Display validation errors using notification
-          const formattedMessages = validationMessages.map((msg: string) => `• ${msg}`).join('\n');
-
-          notification.error({
-            message: 'Validation Error',
-            description: formattedMessages,
-            duration: 5,
-            style: { whiteSpace: 'pre-line' },
-            title: undefined
-          });
-
-          throw new NetworkError(
-            String(response.status),
-            validationMessages.join('; '),
-            response.status
-          );
-        }
-
-        // Handle other error cases
-        const errorMsg = errorData.message || failStatusMap[response.status] || `请求失败 (${response.status})`;
-        throw new NetworkError(
-          String(response.status),
-          errorMsg,
-          response.status
-        );
+        throw new NetworkError(message, response.status);
       }
 
       // For other successful status codes
@@ -110,14 +76,12 @@ export const sync = async (fn: () => Promise<any>, { loading = true } = {}) => {
     if (close) {
       close();
     }
-    const msg = getErrMsg(e);
-    if (e instanceof NetworkError) {
-      // todo
-    }
-    notification.error({
-      message: "提示",
-      description: msg,
-      title: undefined
+
+    // Use centralized error handler
+    const errorHandler = new ErrorHandler();
+    errorHandler.handle(e, {
+      showNotification: true,
+      showMessage: false,
     });
   }
 };
@@ -155,9 +119,6 @@ function getErrMsg(e: unknown): string {
     return e;
   }
   if (e instanceof NetworkError) {
-    if (e.code) {
-      return `[${e.code}]${e.message}`;
-    }
     return e.message;
   }
 

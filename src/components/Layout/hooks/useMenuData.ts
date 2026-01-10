@@ -1,5 +1,7 @@
 import { useEffect, useState, createElement } from 'react';
+import { App } from 'antd';
 import { AuthMenusApiV1, MenuItemData } from '@/core/services/api';
+import { ErrorHandler } from '@/core/services/error-handler';
 import * as Icons from '@ant-design/icons';
 
 export interface TransformedMenuItem {
@@ -15,6 +17,7 @@ export interface MenuRouteData {
 }
 
 export function useMenuData() {
+  const { message: messageApi, notification: notificationApi } = App.useApp();
   const [menuData, setMenuData] = useState<MenuRouteData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -82,7 +85,16 @@ export function useMenuData() {
       } catch (err: any) {
         console.error('❌ Error fetching menus:', err);
         console.error('❌ Error message:', err?.message);
+        console.error('❌ Error status:', err?.status);
         console.error('❌ Error stack:', err?.stack);
+
+        // Use ErrorHandler to handle the error (will redirect if auth error)
+        const errorHandler = new ErrorHandler(messageApi, notificationApi);
+        errorHandler.handle(err, {
+          showNotification: true,
+          showMessage: false,
+        });
+
         setError(err?.message || 'Failed to load menu data');
       } finally {
         setLoading(false);
@@ -91,7 +103,7 @@ export function useMenuData() {
     };
 
     fetchMenus();
-  }, []);
+  }, [messageApi, notificationApi]);
 
   return { menuData, loading, error };
 }
