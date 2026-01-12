@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function middleware(request: NextRequest, res: NextResponse) {
+    console.log("🚀 ~ middleware ~ res:", res)
     const token = request.cookies.get('access_token');
     const { pathname } = request.nextUrl;
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { ProLayout } from "@ant-design/pro-components";
-import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useMenuData } from "./hooks/useMenuData";
 import { useLogout } from "./hooks/useLogout";
@@ -30,14 +29,6 @@ export default function PageLayout({ children }: PageLayoutProps) {
     avatarProps,
     actionsRender,
   } = useLayoutConfig(handleLogout);
-
-  // Log menu state for debugging
-  useEffect(() => {
-    console.log('=== MENU STATE ===');
-    console.log('Loading:', menuLoading);
-    console.log('Error:', menuError);
-    console.log('Menu Data:', menuData);
-  }, [menuLoading, menuError, menuData]);
 
   // Show loading state
   if (menuLoading) {

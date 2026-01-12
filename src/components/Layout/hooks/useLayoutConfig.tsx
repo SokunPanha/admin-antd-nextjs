@@ -20,7 +20,7 @@ export function useLayoutConfig(onLogout: () => void) {
         const profile = await AuthProfileApiV1();
         setUserProfile(profile);
       } catch (error) {
-        console.error('Failed to fetch user profile:', error);
+        // Failed to fetch profile, will use fallback
       }
     };
 

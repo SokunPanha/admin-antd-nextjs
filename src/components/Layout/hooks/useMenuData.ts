@@ -55,31 +55,20 @@ export function useMenuData() {
           menuItems = (response as any).data;
         }
         else {
-          console.warn('⚠️ API response structure not recognized');
-          console.warn('⚠️ Available properties:', Object.keys(response));
           throw new Error('Invalid menu data structure - no menus array found');
-        }
-
-        if (menuItems.length === 0) {
-          console.warn('⚠️ No menu items found in response');
         }
 
         // Store raw menu items
         setRawMenuItems(menuItems);
         setError(null);
       } catch (err: any) {
-        console.error('❌ Error fetching menus:', err);
-        console.error('❌ Error message:', err?.message);
-        console.error('❌ Error status:', err?.status);
-        console.error('❌ Error stack:', err?.stack);
-
         // Use ErrorHandler to handle the error (will redirect if auth error)
         const errorHandler = new ErrorHandler(messageApi, notificationApi);
         errorHandler.handle(err, {
           showNotification: true,
           showMessage: false,
         });
-
+        window.location.href = '/service-unavailable';
         setError(err?.message || 'Failed to load menu data');
       } finally {
         setLoading(false);
@@ -91,7 +80,6 @@ export function useMenuData() {
 
   // Transform menu data when locale changes
   useEffect(() => {
-    console.log("🚀 ~ useMenuData ~ rawMenuItems:", rawMenuItems)
     if (rawMenuItems) {
       const transformedData: MenuRouteData = {
         path: '/admin',

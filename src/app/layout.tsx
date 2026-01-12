@@ -6,6 +6,7 @@ import "@/utils/suppress-console-warnings";
 import "./globals.css";
 import LocaleProvider from "@/components/providers/LocaleProvider";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
