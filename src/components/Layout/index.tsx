@@ -49,7 +49,7 @@ export default function PageLayout({ children }: PageLayoutProps) {
         contentWidth="Fluid"
         fixedHeader
         fixSiderbar
-        siderWidth={256}
+        // siderWidth={256}
         defaultCollapsed={false}
         location={location}
         menuItemRender={menuItemRender}
