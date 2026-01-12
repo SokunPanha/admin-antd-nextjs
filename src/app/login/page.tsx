@@ -9,7 +9,6 @@ import {
 } from "@ant-design/icons";
 import {
   LoginForm,
-  ProFormCheckbox,
   ProFormText,
 } from "@ant-design/pro-components";
 import { message, Tabs, App } from "antd";
@@ -207,12 +206,6 @@ function LoginContent() {
                         />
                     </>
                 )} */}
-          <div className="mb-6">
-            <ProFormCheckbox noStyle name="autoLogin">
-              {t("rememberMe")}
-            </ProFormCheckbox>
-            <a className="float-right">{t("forgotPassword")}</a>
-          </div>
         </LoginForm>
       </div>
     </div>
